@@ -1,0 +1,12 @@
+.icon-geocontacts {
+	background-image: url(../images/view-16x16-geocontacts.png);
+}
+
+.icon-48-geocontacts {
+	background-image: url(../images/view-48x48-geocontacts.png);
+}
+
+.list-media {
+      max-width: 100px;
+      max-height: 100px;
+}

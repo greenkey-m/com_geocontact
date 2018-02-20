@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset addfieldpath="/components/com_geocontact/models/fields">
+
+       <field name="id" type="text" default="0" label="COM_GEOCONTACT_FORM_LBL_GEOCONTACT_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+	   <field
+			name="created_by"
+			type="createdby"
+			label="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_DESC"
+			default=""
+			/>
+	
+		<field
+			class="inputbox"
+			size="1"
+			name="state"
+			type="list"
+			label="COM_GEOCONTACT_GEOCONTACT_STATE_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_STATE_DESC"
+			default="1"
+			>
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+	
+		<field
+			name="ordering"
+			type="hidden"
+			label="COM_GEOCONTACT_GEOCONTACT_ORDERING_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_ORDERING_DESC"
+			default=""
+			/>
+
+	</fieldset>
+</form>
