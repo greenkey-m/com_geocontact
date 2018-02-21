@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contacts>
+    <town>
+        <caption>Калуга</caption>
+        <latlong>54.516581, 36.247966</latlong>
+    </town>
+    <town>
+        <caption>Малоярославец</caption>
+        <latlong>55.022287, 36.479229</latlong>
+    </town>
+
+</contacts>

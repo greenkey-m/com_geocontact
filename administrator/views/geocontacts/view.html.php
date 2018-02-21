@@ -20,6 +20,7 @@ class GeocontactViewGeocontacts extends JViewLegacy {
     protected $items;
     protected $pagination;
     protected $state;
+    protected $towns;
 
     /**
      * Display the view
@@ -29,6 +30,9 @@ class GeocontactViewGeocontacts extends JViewLegacy {
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+
+        $xmlfile = JURI::base().'components/com_geocontact/towns.xml';
+	$this->towns = JFactory::getXML($xmlfile,true);
 
         // Check for errors
         if (count($errors = $this->get('Errors'))) {
@@ -108,7 +112,7 @@ class GeocontactViewGeocontacts extends JViewLegacy {
             JToolBarHelper::preferences('com_geocontact');
             $doc = JFactory::getDocument();
             $doc->addStyleDeclaration('#toolbar-upload{float:right;} #toolbar-download{float:right;}');
-            JToolBarHelper::custom('geocontacts.loadxml', 'upload.png', 'upload_f2.png', 'JTOOLBAR_UPLOADXML', true);
+            JToolBarHelper::custom('geocontacts.loadxml', 'upload.png', 'upload_f2.png', 'JTOOLBAR_UPLOADXML', false);
             JToolBarHelper::custom('geocontacts.downloadxml', 'download.png', 'download_f2.png', 'JTOOLBAR_DOWNLOADXML', true);
         }
 
