@@ -54,12 +54,15 @@ class GeocontactModelGeocontact extends JModelLegacy
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('a.id, a.state, a.ordering');
+		$query->select('a.id, a.description, a.stand');
+		$query->select('a.address, a.name, a.phones');
+		$query->select('a.latlong, a.caption, a.state');
+		$query->select('a.ordering');
 
 		$query->from('#__geocontact_geocontacts as a');
 
-		$query->select('b.name as created_by');
-		$query->leftJoin($this->_db->qn('#__users') . ' AS b ON b.id = a.created_by');
+		$query->select('i.name as created_by');
+		$query->leftJoin($this->_db->qn('#__users') . ' AS i ON i.id = a.created_by');
 
 		$query->where('a.id = ' . intval($id));
 		$db->setQuery($query);
