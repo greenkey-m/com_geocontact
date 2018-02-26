@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     1.0.0
  * @package     com_geocontact_1.0.0
@@ -6,7 +7,6 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
-
 // No direct access
 defined('_JEXEC') or die;
 
@@ -15,48 +15,61 @@ jimport('joomla.application.component.controlleradmin');
 /**
  * Geocontact list controller
  */
-class GeocontactControllerGeocontacts extends JControllerAdmin
-{
-	/**
-	 * Proxy for getModel
-	 * @since	1.6
-	 */
-	public function getModel($name = 'geocontact', $prefix = 'GeocontactModel')
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
-    
-	/**
-	 * Method to save the submitted ordering values for records via AJAX
-	 *
-	 * @return  void
-	 *
-	 * @since   3.0
-	 */
-	public function saveOrderAjax()
-	{
-		// Get the input
-		$input = JFactory::getApplication()->input;
-		$pks = $input->post->get('cid', array(), 'array');
-		$order = $input->post->get('order', array(), 'array');
+class GeocontactControllerGeocontacts extends JControllerAdmin {
 
-		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+    /**
+     * Proxy for getModel
+     * @since	1.6
+     */
+    public function getModel($name = 'geocontact', $prefix = 'GeocontactModel', $config = array('ignore_request' => true)) {
+        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
+        return $model;
+    }
 
-		// Get the model
-		$model = $this->getModel();
+    /**
+     * Method to save the submitted ordering values for records via AJAX
+     *
+     * @return  void
+     *
+     * @since   3.0
+     */
+    public function saveOrderAjax() {
+        // Get the input
+        $input = JFactory::getApplication()->input;
+        $pks = $input->post->get('cid', array(), 'array');
+        $order = $input->post->get('order', array(), 'array');
 
-		// Save the ordering
-		$return = $model->saveorder($pks, $order);
+        // Sanitize the input
+        JArrayHelper::toInteger($pks);
+        JArrayHelper::toInteger($order);
 
-		if ($return)
-		{
-			echo "1";
-		}
+        // Get the model
+        $model = $this->getModel();
 
-		// Close the application
-		JFactory::getApplication()->close();
-	}
+        // Save the ordering
+        $return = $model->saveorder($pks, $order);
+
+        if ($return) {
+            echo "1";
+        }
+
+        // Close the application
+        JFactory::getApplication()->close();
+    }
+
+    public function uploadxml() {
+        $xmlfile = JURI::base() . 'components/com_geocontact/towns.xml';
+        //$this->towns = JFactory::getXML($xmlfile, true);
+        $towns = simplexml_load_file($xmlfile);
+        //$this->towns = $this->towns[2]->attributes();
+        //print_r($towns);
+        foreach ($towns as $town) {
+            echo "<p>" . $town->caption . "</p>\n";
+        }
+    }
+
+    public function downloadxml() {
+
+    }
+
 }

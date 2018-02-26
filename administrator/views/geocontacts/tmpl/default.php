@@ -116,7 +116,7 @@ defined('_JEXEC') or die;
                                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php print_r($this->towns); ?>
+
             <div class="pagination center">
                 <?php echo $this->pagination->getListFooter(); ?>
             </div>

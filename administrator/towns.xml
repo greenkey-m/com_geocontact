@@ -1,12 +1,498 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contacts>
-    <town>
+    <town region="3">
+        <caption>Балабаново</caption>
+        <latlong>55.176241, 36.673359</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Белоусово</caption>
+        <latlong>55.090730, 36.662679</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Боровск</caption>
+        <latlong>55.208576, 36.485269</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Ермолино</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Жиздра</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Жуков</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
         <caption>Калуга</caption>
         <latlong>54.516581, 36.247966</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
     </town>
-    <town>
+    <town region="3">
+        <caption>Киров</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Козельск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Кондрово</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Кремёнки</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Людиново</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
         <caption>Малоярославец</caption>
         <latlong>55.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
     </town>
+    <town region="3">
+        <caption>Медынь</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Мещовск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Мосальск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Обнинск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Сосенский</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Спас-Деменск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Сухиничи</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Таруса</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="3">
+        <caption>Юхнов</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+
+
+
+    <town region="1">
+        <caption>Уваровка</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Можайск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Апрелевка</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Бронницы</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Видное</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Дмитров</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Домодедово</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Воскресенск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Егорьевск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Коломна</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Долгопрудный</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Жуковский</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Зеленоград</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Истра</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Климовск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Наро-Фоминск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Подольск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Раменское</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Серпухов</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Солнечногорск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Троицк</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Щербинка</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Чехов</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Электроугли</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Ступино</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Михнеево</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Малино</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Руза</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Можайск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Дорохово</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Уваровка</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Барыбино</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="1">
+        <caption>Протвино</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+
+
+    <town region="2">
+        <caption>Псков</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="2">
+        <caption>Санкт-Петербург</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="2">
+        <caption>Тула</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="2">
+        <caption>Алексин</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="2">
+        <caption>Ясногорск</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+    <town region="2">
+        <caption>Заокский</caption>
+        <latlong>52.022287, 36.479229</latlong>
+        <phones>(999) 999-99-99</phones>
+        <name></name>
+        <address></address>
+        <stand></stand>
+    </town>
+
 
 </contacts>
