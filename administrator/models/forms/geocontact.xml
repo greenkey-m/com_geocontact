@@ -8,7 +8,7 @@
 
 	   <field
 			name="description"
-			type="textarea"
+			type="editor"
 			label="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_LBL"
 			description="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_DESC"
 			filter="raw"
