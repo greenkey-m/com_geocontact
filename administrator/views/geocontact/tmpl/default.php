@@ -24,6 +24,62 @@ defined('_JEXEC') or die;
 				</div>
             	<div class="control-group">
 					<div class="control-label">
+						<?php echo $this->form->getLabel('description'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('description'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('stand'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('stand'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('address'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('address'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('name'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('name'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('phones'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('phones'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('latlong'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('latlong'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
+						<?php echo $this->form->getLabel('caption'); ?>
+					</div>
+					<div class="controls">
+						<?php echo $this->form->getInput('caption'); ?>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="control-label">
 						<?php echo $this->form->getLabel('created_by'); ?>
 					</div>
 					<div class="controls">

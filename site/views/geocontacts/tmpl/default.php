@@ -37,7 +37,28 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="item-created_by">
+                    <th class="item-description">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_DESCRIPTION', 'a.description', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-stand">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_STAND', 'a.stand', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-address">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_ADDRESS', 'a.address', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-name">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_NAME', 'a.name', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-phones">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_PHONES', 'a.phones', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-latlong">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_LATLONG', 'a.latlong', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-caption">
+						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_CAPTION', 'a.caption', $listDirn, $listOrder); ?>
+					</th>
+					<th class="item-created_by">
 						<?php echo JHtml::_('grid.sort',  'COM_GEOCONTACT_HEADING_FRONTEND_LIST_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 					</th>
                 </tr>
@@ -45,7 +66,42 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             <tbody>
                 <?php foreach ($this->items as $i => $item) : ?>
                 <tr class="<?php echo ($i % 2) ? "odd" : "even"; ?>">
-                    <td class="item-created_by">
+                    <td class="item-description">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->description; ?>
+						</a>
+					</td>
+					<td class="item-stand">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->stand; ?>
+						</a>
+					</td>
+					<td class="item-address">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->address; ?>
+						</a>
+					</td>
+					<td class="item-name">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->name; ?>
+						</a>
+					</td>
+					<td class="item-phones">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->phones; ?>
+						</a>
+					</td>
+					<td class="item-latlong">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->latlong; ?>
+						</a>
+					</td>
+					<td class="item-caption">
+						<a href="<?php echo JRoute::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+							<?php echo $item->caption; ?>
+						</a>
+					</td>
+					<td class="item-created_by">
 						<?php echo $item->created_by; ?>
 					</td>
                 </tr>

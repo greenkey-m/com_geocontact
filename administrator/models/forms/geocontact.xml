@@ -7,6 +7,63 @@
             description="JGLOBAL_FIELD_ID_DESC" /> 
 
 	   <field
+			name="description"
+			type="textarea"
+			label="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_DESC"
+			filter="raw"
+			default=""
+			/>
+	
+		<field
+			name="stand"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_STAND_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_STAND_DESC"
+			default=""
+			/>
+	
+		<field
+			name="address"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_ADDRESS_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_ADDRESS_DESC"
+			default=""
+			/>
+	
+		<field
+			name="name"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_NAME_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_NAME_DESC"
+			default=""
+			/>
+	
+		<field
+			name="phones"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_PHONES_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_PHONES_DESC"
+			default=""
+			/>
+	
+		<field
+			name="latlong"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_LATLONG_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_LATLONG_DESC"
+			default=""
+			/>
+	
+		<field
+			name="caption"
+			type="textfield"
+			label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"
+			description="COM_GEOCONTACT_GEOCONTACT_CAPTION_DESC"
+			default=""
+			/>
+	
+		<field
 			name="created_by"
 			type="createdby"
 			label="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_LBL"

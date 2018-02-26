@@ -30,6 +30,13 @@ class GeocontactModelGeocontacts extends JModelList
         {
             $config['filter_fields'] = array(
                 'id', 'a.id',
+				'description', 'a.description',
+				'stand', 'a.stand',
+				'address', 'a.address',
+				'name', 'a.name',
+				'phones', 'a.phones',
+				'latlong', 'a.latlong',
+				'caption', 'a.caption',
 				'created_by', 'a.created_by',
 				'state', 'a.state',
 				'ordering', 'a.ordering',
@@ -77,12 +84,15 @@ class GeocontactModelGeocontacts extends JModelList
     {
         $query = $this->_db->getQuery(true);
 
-        $query->select('a.id, a.state, a.ordering');
+        $query->select('a.id, a.description, a.stand');
+		$query->select('a.address, a.name, a.phones');
+		$query->select('a.latlong, a.caption, a.state');
+		$query->select('a.ordering');
 
         $query->from('`#__geocontact_geocontacts` AS a');
 
-        $query->select('b.name as created_by');
-		$query->leftJoin($this->_db->qn('#__users') . ' AS b ON b.id = a.created_by');
+        $query->select('i.name as created_by');
+		$query->leftJoin($this->_db->qn('#__users') . ' AS i ON i.id = a.created_by');
 
         $query->where('a.state = 1');
 
@@ -91,7 +101,14 @@ class GeocontactModelGeocontacts extends JModelList
 
         // Search in these columns
         $searchColumns = array(
-            'b.name',
+            'a.description',
+			'a.stand',
+			'a.address',
+			'a.name',
+			'a.phones',
+			'a.latlong',
+			'a.caption',
+			'i.name',
         );
 
         if (!empty($searchWord))
