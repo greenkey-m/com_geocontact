@@ -57,6 +57,15 @@ class GeocontactModelGeocontact extends JModelAdmin
 		return $form;
 	}
 
+        /**
+         * Method to create Item from file
+         *
+         *  @param	array	$data		An array of data for the new Item
+         */
+        public function createItem ($data = array()) {
+
+        }
+
 	/**
 	 * Method to get the data that should be injected in the form
 	 *

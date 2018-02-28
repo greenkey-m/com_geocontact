@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     1.0.0
  * @package     com_geocontact_1.0.0
@@ -6,14 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
-
 defined('_JEXEC') or die;
 
 /**
  * Geocontact form
  */
-class FormGeocontactGeocontact extends FOFModel
-{
+class FormGeocontactGeocontact extends FOFModel {
+
     /**
      * Method to get the record form.
      *
@@ -22,12 +22,10 @@ class FormGeocontactGeocontact extends FOFModel
      * @return	JForm	A JForm object on success, false on failure
      * @since	1.6
      */
-    public function getForm($data = array(), $loadData = true, $source = NULL)
-    {
+    public function getForm($data = array(), $loadData = true, $source = NULL) {
         // Get the form
         $form = $this->loadForm('com_geocontact.geocontact', 'geocontact', array('control' => 'jform', 'load_data' => $loadData));
-        if (empty($form))
-        {
+        if (empty($form)) {
             return false;
         }
 
@@ -39,26 +37,28 @@ class FormGeocontactGeocontact extends FOFModel
      *
      * @return  array   $fieldOptions   An array with the field options
      */
-    public function getFieldOptions()
-    {
+    public function getFieldOptions() {
         $form = $this->getForm();
 
-        $xmlFieldset = $form->getXml()->fieldset;
+        if ($form) {
 
-        $fieldOptions = array();
-        foreach ($xmlFieldset->children() as $field)
-        {
-            $fieldColumn = (string) $field['name'];
+            $xmlFieldset = $form->getXml()->fieldset;
 
-            foreach ($field->children() as $option)
-            {
-                $key = (string) $option['value'];
-                $value = (string) $option;
+            $fieldOptions = array();
+            foreach ($xmlFieldset->children() as $field) {
+                $fieldColumn = (string) $field['name'];
 
-                $fieldOptions[$fieldColumn][$key] = $value;
+                foreach ($field->children() as $option) {
+                    $key = (string) $option['value'];
+                    $value = (string) $option;
+
+                    $fieldOptions[$fieldColumn][$key] = $value;
+                }
             }
+            return $fieldOptions;
+        } else {
+            return false;
         }
-
-        return $fieldOptions;
     }
+
 }

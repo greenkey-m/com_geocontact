@@ -56,7 +56,7 @@ class GeocontactViewGeocontact extends JViewLegacy
         $this->_prepareDocument();
 
         $xmlfile = JURI::base().'administrator/components/com_geocontact/towns.xml';
-        echo $xmlfile;
+        //echo $xmlfile;
 	//$this->towns = JFactory::getXML($xmlfile, true);
         $this->towns = simplexml_load_file($xmlfile);
         //$this->towns = $this->towns[2]->attributes();
