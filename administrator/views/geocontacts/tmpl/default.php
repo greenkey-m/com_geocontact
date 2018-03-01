@@ -114,19 +114,21 @@ defined('_JEXEC') or die;
                                 <?php if ($canChange && $this->saveOrder) : ?>
                                     <input type="text" style="display:none" name="order[]" size="5"
                                            value="<?php echo $item->ordering; ?>" class="width-20 text-area-order " />
-                                <?php endif; ?>
+                                       <?php endif; ?>
                             </td>
                             <td class="center">
-                                       <?php echo JHtml::_('grid.id', $i, $item->id); ?>
+                                <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                             </td>
                             <td>
                                 <a href="<?php echo JRoute::_('index.php?option=com_geocontact&task=geocontact.edit&id=' . $item->id); ?>">
-                                <?php echo $item->caption; ?>
+                                    <?php echo $item->caption; ?>
                                 </a>
-
+                                <div class="small">
+                                    <?php echo JText::_('JCATEGORY') . ': ' . $this->escape($item->category_title); ?>
+                                </div>
                             </td>
                             <td>
-    <?php echo $item->stand; ?>
+                                <?php echo $item->stand; ?>
                             </td>
                             <td>
                                 <?php echo $item->address; ?>
@@ -148,21 +150,21 @@ defined('_JEXEC') or die;
                             </td>
                             <td>
                                 <a href="<?php echo JRoute::_('index.php?option=com_geocontact&task=geocontact.edit&id=' . $item->id); ?>">
-                                <?php echo $item->id; ?>
+                                    <?php echo $item->id; ?>
                                 </a>
                             </td>
                         </tr>
-                                <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <div class="pagination center">
-                    <?php echo $this->pagination->getListFooter(); ?>
+                <?php echo $this->pagination->getListFooter(); ?>
             </div>
             <input type="hidden" name="task" value="" />
             <input type="hidden" name="boxchecked" value="0" />
             <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
             <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-<?php echo JHtml::_('form.token'); ?>
+            <?php echo JHtml::_('form.token'); ?>
         </div>
     </div>
 </form>

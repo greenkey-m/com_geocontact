@@ -1,5 +1,4 @@
-<?php
-
+﻿<?php
 /**
  * @version     1.0.0
  * @package     com_geocontact_1.0.0
@@ -92,9 +91,14 @@ class GeocontactModelGeocontacts extends JModelList {
         $query->select('a.id, a.description, a.stand');
         $query->select('a.address, a.name, a.phones');
         $query->select('a.latlong, a.caption, a.state');
-        $query->select('a.ordering');
+        $query->select('a.catid, a.ordering');
 
         $query->from('`#__geocontact_geocontacts` AS a');
+
+        // Join over the categories.
+        $query->select('c.title AS category_title')
+                ->join('LEFT', ' #__categories AS c' . ' ON c.id = a.catid');
+
 
         $query->select('i.name as created_by');
         $query->leftJoin($this->_db->qn('#__users') . ' AS i ON i.id = a.created_by');
@@ -192,6 +196,19 @@ class GeocontactModelGeocontacts extends JModelList {
         return JTable::getInstance($type, $prefix, $config);
     }
 
+    protected function rus2lat($s) {
+        $s = (string) $s; // преобразуем в строковое значение
+        $s = strip_tags($s); // убираем HTML-теги
+        $s = str_replace(array("\n", "\r"), " ", $s); // убираем перевод каретки
+        $s = preg_replace("/\s+/", ' ', $s); // удаляем повторяющие пробелы
+        $s = trim($s); // убираем пробелы в начале и конце строки
+        $s = function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s); // переводим строку в нижний регистр (иногда надо задать локаль)
+        $s = strtr($s, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'shch', 'ы' => 'y', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya', 'ъ' => '', 'ь' => ''));
+        $s = preg_replace("/[^0-9a-z-_ ]/i", "", $s); // очищаем строку от недопустимых символов
+        $s = str_replace(" ", "-", $s); // заменяем пробелы знаком минус
+        return $s; // возвращаем результат return iconv("UTF-8","UTF-8//IGNORE", $s);
+    }
+
     public function newItems() {
         $xmlfile = JURI::base() . 'components/com_geocontact/towns.xml';
         //$this->towns = JFactory::getXML($xmlfile, true);
@@ -202,14 +219,18 @@ class GeocontactModelGeocontacts extends JModelList {
         foreach ($towns as $town) {
             echo "<p>" . $town->caption . "</p>\n";
             // Получаем экземпляр класса TableGeocontact.
+            if ($town->alias == "") {
+                $town->alias = $this->rus2lat($town->caption);
+            }
             $table = $this->getTable();
-            $table->description = "HELLO";
-            $table->stand = (string) $town->stand;
-            $table->address = (string) $town->address;
-            $table->name = (string) $town->name;
-            $table->phones = (string) $town->phones;
-            $table->latlong = (string) $town->latlong;
             $table->caption = (string) $town->caption;
+            $table->alias = (string) $town->alias;
+            $table->latlong = (string) $town->latlong;
+            $table->phones = (string) $town->phones;
+            $table->name = (string) $town->name;
+            $table->address = (string) $town->address;
+            $table->stand = (string) $town->stand;
+            $table->description = (string) $town->description;
             $table->store();
             //$table->publish();
         }
