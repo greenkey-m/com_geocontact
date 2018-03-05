@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
     </div>
 <?php endif; ?>
 <div class="table-responsive">
-    <table class="table table-striped">
+    <!--<table class="table table-striped">
         <tr>
 			<th class="item-description">
 				<?php echo JText::_('COM_GEOCONTACT_HEADING_FRONTEND_DETAIL_DESCRIPTION'); ?>
@@ -87,7 +87,7 @@ defined('_JEXEC') or die;
                 <?php //echo $this->item->created_by; ?>
 			</td>
 		</tr>
-    </table>
+    </table>-->
 </div>
 
 <!--<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>-->
@@ -270,6 +270,9 @@ defined('_JEXEC') or die;
         </div>
         <div class="col-sm-6">
             <?php echo $this->item->description; ?>
+            <a class="btn btn-white more" href="/company-info/contact-us">
+                Заказать<i class="pl-10 fa fa-shopping-cart"></i>
+            </a>
         </div>
     </div>
 </div>

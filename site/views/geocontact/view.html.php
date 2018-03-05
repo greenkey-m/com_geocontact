@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     1.0.0
  * @package     com_geocontact_1.0.0
@@ -6,7 +7,6 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
-
 // No direct access
 defined('_JEXEC') or die;
 
@@ -15,34 +15,60 @@ jimport('joomla.application.component.view');
 /**
  * Geocontact detail view
  */
-class GeocontactViewGeocontact extends JViewLegacy
-{
+class GeocontactViewGeocontact extends JViewLegacy {
+
     protected $state;
     protected $item;
     protected $params;
     protected $towns;
+    protected $regs;
 
     /**
      * Display the view
      */
-    public function display($tpl = null)
-    {
-		$app	= JFactory::getApplication();
-        $user	= JFactory::getUser();
+    public function display($tpl = null) {
+        $app = JFactory::getApplication();
+        $user = JFactory::getUser();
 
-        $this->state 				= $this->get('State');
-        $this->item 				= $this->get('Item');
-        $this->pagination           = $this->get('pagination');
-        $this->params 				= $app->getParams('com_geocontact');
+        $this->state = $this->get('State');
+        $this->item = $this->get('Item');
+        $this->pagination = $this->get('pagination');
+        $this->params = $app->getParams('com_geocontact');
+
+        // Preparing description
+        switch ($this->item->category_title) {
+            case "Калужская область": $this->item->category_title = "Калужской области";
+                break;
+            case "Московская область": $this->item->category_title = "Московской области";
+                break;
+            case "Прочие регионы": $this->item->category_title = "Калужской, Московской, Тульской области";
+                break;
+        }
+        $this->item->description = str_replace("{caption}", $this->item->caption, $this->item->description);
+        $this->item->description = str_replace("{phones}", $this->item->phones, $this->item->description);
+        $this->item->description = str_replace("{stand}", $this->item->stand, $this->item->description);
+        $this->item->description = str_replace("{name}", $this->item->name, $this->item->description);
+        $this->item->description = str_replace("{address}", $this->item->address, $this->item->description);
+        $this->item->description = str_replace("{category}", $this->item->category_title, $this->item->description);
+
+        preg_match_all("/\{([^\{\}|]*)\|([^\{\}|]*)\}/", $this->item->description, $this->regs);
+        $selecting = $this->regs[0];
+        $os = array('a', 'b', 'k', 'l', 'e', 'x', 'y', 'w', 'z', 'i', 'p', 'm', 'w');
+        foreach ($selecting as $i => $s) {
+            if (in_array($this->item->category_alias[$i], $os)) {
+                $x = 1;
+            } else {
+                $x = 2;
+            };
+            $this->item->description = str_replace($s, $this->regs[$x][$i], $this->item->description);
+        }
 
         // Throw exeption if errors
-        if (count($errors = $this->get('Errors')))
-        {
+        if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
 
-        if($this->_layout == 'edit')
-        {
+        if ($this->_layout == 'edit') {
             $authorised = $user->authorise('core.create', 'com_geocontact');
 
             if ($authorised !== true) {
@@ -55,9 +81,9 @@ class GeocontactViewGeocontact extends JViewLegacy
 
         $this->_prepareDocument();
 
-        $xmlfile = JURI::base().'administrator/components/com_geocontact/towns.xml';
+        $xmlfile = JURI::base() . 'administrator/components/com_geocontact/towns.xml';
         //echo $xmlfile;
-	//$this->towns = JFactory::getXML($xmlfile, true);
+        //$this->towns = JFactory::getXML($xmlfile, true);
         $this->towns = simplexml_load_file($xmlfile);
         //$this->towns = $this->towns[2]->attributes();
 
@@ -71,9 +97,8 @@ class GeocontactViewGeocontact extends JViewLegacy
      *
      * @since   1.6
      */
-    protected function _prepareDocument()
-    {
-        $app   = JFactory::getApplication();
+    protected function _prepareDocument() {
+        $app = JFactory::getApplication();
         $menus = $app->getMenu();
         $title = null;
 
@@ -81,44 +106,33 @@ class GeocontactViewGeocontact extends JViewLegacy
         // we need to get it from the menu item itself
         $menu = $menus->getActive();
 
-        if ($menu)
-        {
+        if ($menu) {
             $this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-        }
-        else
-        {
+        } else {
             $this->params->def('page_heading', JText::_('COM_GEOCONTACT_DEFAULT_PAGE_TITLE'));
         }
 
         $title = $this->params->get('page_title', '');
 
-        if (empty($title))
-        {
+        if (empty($title)) {
             $title = $app->get('sitename');
-        }
-        elseif ($app->get('sitename_pagetitles', 0) == 1)
-        {
+        } elseif ($app->get('sitename_pagetitles', 0) == 1) {
             $title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-        }
-        elseif ($app->get('sitename_pagetitles', 0) == 2)
-        {
+        } elseif ($app->get('sitename_pagetitles', 0) == 2) {
             $title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
         }
 
         $this->document->setTitle($title);
 
-        if ($this->params->get('menu-meta_description'))
-        {
+        if ($this->params->get('menu-meta_description')) {
             $this->document->setDescription($this->params->get('menu-meta_description'));
         }
 
-        if ($this->params->get('menu-meta_keywords'))
-        {
+        if ($this->params->get('menu-meta_keywords')) {
             $this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
         }
 
-        if ($this->params->get('robots'))
-        {
+        if ($this->params->get('robots')) {
             $this->document->setMetadata('robots', $this->params->get('robots'));
         }
     }
@@ -126,12 +140,12 @@ class GeocontactViewGeocontact extends JViewLegacy
     /**
      * Load the template header data here to simplify the template
      */
-    protected function loadTemplateHeader()
-    {
+    protected function loadTemplateHeader() {
         JHtml::_('jquery.framework');
 
         $document = JFactory::getDocument();
         $document->addStyleSheet('components/com_geocontact/assets/css/geocontact.css');
         $document->addScript('components/com_geocontact/assets/js/detail.js');
     }
+
 }

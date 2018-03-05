@@ -102,6 +102,8 @@ class GeocontactModelGeocontacts extends JModelList {
 
         $query->where('a.state = 1');
 
+        $query->order('category_title ASC');
+
         // Search for this word
         $searchWord = $this->getState('filter.search');
 
