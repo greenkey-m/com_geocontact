@@ -42,7 +42,7 @@ class GeocontactModelGeocontact extends JModelLegacy
 		$app = JFactory::getApplication();
 
 		// Тут креатор задал получениe id, но это не совсем верно. Заменил на Itemid
-                $id = $app->input->getInt('Itemid');
+                $id = $app->input->getInt('id');
 		$params = $app->getParams();
 
 		$paramId = $params->get('id');

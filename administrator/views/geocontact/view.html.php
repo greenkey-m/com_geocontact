@@ -28,10 +28,10 @@ class GeocontactViewGeocontact extends JViewLegacy
 	{
 		// Load the component params
 		$this->component_params = JComponentHelper::getParams('com_geocontact');
-		
+
 		$this->state	= $this->get('State');
-		$this->item		= $this->get('Item');
-		$this->form		= $this->get('Form');
+		$this->item	= $this->get('Item');
+		$this->form	= $this->get('Form');
 
 		// Throw exeption if errors
 		if (count($errors = $this->get('Errors')))

@@ -113,6 +113,13 @@ class GeocontactViewGeocontacts extends JViewLegacy {
             JToolBarHelper::custom('geocontacts.downloadxml', 'download.png', 'download_f2.png', 'JTOOLBAR_DOWNLOADXML', true);
         }
 
+        // Instantiate a new JLayoutFile instance and render the batch button
+        $layout = new JLayoutFile('joomla.toolbar.batch');
+        $bar = JToolbar::getInstance('toolbar');
+        $dhtml = $layout->render(array('title' => JText::_('JTOOLBAR_BATCH')));
+        $bar->appendButton('Custom', $dhtml, 'batch');
+
+
         //Set sidebar action - New in 3.0
         JHtmlSidebar::setAction('index.php?option=com_geocontact&view=geocontacts');
 

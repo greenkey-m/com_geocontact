@@ -171,7 +171,7 @@ class GeocontactModelGeocontacts extends JModelList {
                 }
 
                 // If this field has options
-                if (isset($fieldOptions[$key])) {
+                if (isset($fieldOptions[$key][$value])) {
                     // Update the item key with the field option
                     $item->{$key} = JText::_($fieldOptions[$key][$value]);
                 }

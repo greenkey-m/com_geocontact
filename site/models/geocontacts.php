@@ -93,6 +93,10 @@ class GeocontactModelGeocontacts extends JModelList {
 
         $query->from('`#__geocontact_geocontacts` AS a');
 
+        // Join over the categories.
+        $query->select('c.title AS category_title')
+                ->join('LEFT', ' #__categories AS c' . ' ON c.id = a.catid');
+
         $query->select('i.name as created_by');
         $query->leftJoin($this->_db->qn('#__users') . ' AS i ON i.id = a.created_by');
 

@@ -7,6 +7,22 @@
                description="JGLOBAL_FIELD_ID_DESC" />
 
         <field
+            name="caption"
+            type="textfield"
+            label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"
+            description="COM_GEOCONTACT_GEOCONTACT_CAPTION_DESC"
+            default=""
+        />
+
+        <field
+            name="alias"
+            type="textfield"
+            label="COM_GEOCONTACT_GEOCONTACT_ALIAS_LBL"
+            description="COM_GEOCONTACT_GEOCONTACT_ALIAS_DESC"
+            default=""
+        />
+
+        <field
             name="description"
             type="editor"
             label="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_LBL"
@@ -56,14 +72,6 @@
         />
 
         <field
-            name="caption"
-            type="textfield"
-            label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"
-            description="COM_GEOCONTACT_GEOCONTACT_CAPTION_DESC"
-            default=""
-        />
-
-        <field
             name="catid"
             type="category"
             extension="com_geocontact"
@@ -85,9 +93,9 @@
         />
 
         <field
+            name="state"
             class="inputbox"
             size="1"
-            name="state"
             type="list"
             label="COM_GEOCONTACT_GEOCONTACT_STATE_LBL"
             description="COM_GEOCONTACT_GEOCONTACT_STATE_DESC"
@@ -115,7 +123,7 @@
             description="COM_GEOCONTACT_GEOCONTACT_TAG_FIELD_NAME_DESC"
             multiple="true"
             custom="allow"
-            required="true"
+            required="false"
         />
 
     </fieldset>
