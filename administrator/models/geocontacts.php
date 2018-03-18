@@ -219,6 +219,7 @@ class GeocontactModelGeocontacts extends JModelList {
         foreach ($towns as $town) {
             echo "<p>" . $town->caption . "</p>\n";
             // Получаем экземпляр класса TableGeocontact.
+            // Possible to use this JFilterOutput::stringURLSafe($string)
             if ($town->alias == "") {
                 $town->alias = $this->rus2lat($town->caption);
             }

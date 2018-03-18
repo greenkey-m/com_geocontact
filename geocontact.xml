@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_geocontact</name>
-    <creationDate>2018-02-19</creationDate>
+    <creationDate>2018-03-05</creationDate>
     <copyright>Copyright (C) 2018. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author>Matvey</author>
     <authorEmail>info@greenkey.ru</authorEmail>
     <authorUrl>http://geocontact.greenkey.ru</authorUrl>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <description>Geo + contact list</description>
 
     <!-- Runs on install -->

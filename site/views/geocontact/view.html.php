@@ -19,6 +19,9 @@ class GeocontactViewGeocontact extends JViewLegacy {
 
     protected $state;
     protected $item;
+    protected $caption_morph1;
+    protected $caption_morph2;
+    protected $caption_morph5;
     protected $params;
     protected $towns;
     protected $regs;
@@ -35,6 +38,12 @@ class GeocontactViewGeocontact extends JViewLegacy {
         $this->pagination = $this->get('pagination');
         $this->params = $app->getParams('com_geocontact');
 
+        $morph = json_decode(file_get_contents('http://morphos.tech/api/inflect-geographical-name?name='.$this->item->caption.'&_format=json'), true);
+        //print_r($morph);
+        $this->caption_morph1 = $morph['cases'][1];
+        $this->caption_morph2 = $morph['cases'][2];
+        $this->caption_morph5 = $morph['cases'][5];
+
         // Preparing description
         switch ($this->item->category_title) {
             case "Калужская область": $this->item->category_title = "Калужской области";
@@ -45,6 +54,9 @@ class GeocontactViewGeocontact extends JViewLegacy {
                 break;
         }
         $this->item->description = str_replace("{caption}", $this->item->caption, $this->item->description);
+        $this->item->description = str_replace("{caption1}", $this->caption_morph1, $this->item->description);
+        $this->item->description = str_replace("{caption2}", $this->caption_morph2, $this->item->description);
+        $this->item->description = str_replace("{caption5}", $this->caption_morph5, $this->item->description);
         $this->item->description = str_replace("{phones}", $this->item->phones, $this->item->description);
         $this->item->description = str_replace("{stand}", $this->item->stand, $this->item->description);
         $this->item->description = str_replace("{name}", $this->item->name, $this->item->description);
