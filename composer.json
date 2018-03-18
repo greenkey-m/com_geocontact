@@ -1,0 +1,13 @@
+{
+    "name": "vendor/geocontact",
+    "description": "Описание проекта geocontact.",
+    "authors": [
+        {
+            "name": "matt",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "wapmorgan/morphos": "dev-master"
+    }
+}
