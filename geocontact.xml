@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_geocontact</name>
+    <version>2.0.0</version>
+    <description>Geo + contact list for Joomla 5</description>
+    <author>Matvey Rumynin</author>
+    <authorEmail>info@greenkey.ru ?</authorEmail>
     <creationDate>2018-03-05</creationDate>
+    <authorUrl>https://geocontact.greenkey.ru ?</authorUrl>
     <copyright>Copyright (C) 2018. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <author>Matvey</author>
-    <authorEmail>info@greenkey.ru</authorEmail>
-    <authorUrl>http://geocontact.greenkey.ru</authorUrl>
-    <version>1.0.4</version>
-    <description>Geo + contact list</description>
+    <namespace path="src">Greenkey\Component\Geocontact</namespace>
 
     <!-- Runs on install -->
     <install>
