@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_GEOCONTACT_GEOCONTACT_VIEW_DEFAULT_TITLE" option="View">
+		<message>
+			<![CDATA[COM_GEOCONTACT_GEOCONTACT_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="id" type="sql" label="COM_GEOCONTACT_GEOCONTACT_ID_FIELD_LABEL"
+					   description="COM_GEOCONTACT_GEOCONTACT_ID_FIELD_DESC"
+					   query="SELECT id FROM #__geocontact_geocontacts ORDER BY id ASC" key_field="id"
+					   value_field="id" required="true" />
+
+				<!-- Define your basic params for the view here -->
+			</fieldset>
+		</fields>
+	</config>
+</metadata>

@@ -8,6 +8,7 @@
         }
     ],
     "require": {
-        "wapmorgan/morphos": "dev-master"
+        "wapmorgan/morphos": "dev-master",
+      "ext-simplexml": "*"
     }
 }
