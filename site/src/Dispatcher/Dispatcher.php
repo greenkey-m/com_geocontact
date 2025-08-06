@@ -7,7 +7,7 @@
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
 
-namespace Joomla\Component\Geocontact\Site\Dispatcher;
+namespace Greenkey\Component\Geocontact\Site\Dispatcher;
 
 defined('JPATH_PLATFORM') or die;
 

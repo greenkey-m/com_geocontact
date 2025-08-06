@@ -18,7 +18,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\CMS\Extension\Service\Provider\RouterFactory;
 use Joomla\CMS\Component\Router\RouterFactoryInterface;
-use Joomla\Component\Geocontact\Administrator\Extension\GeocontactComponent;
+use Greenkey\Component\Geocontact\Administrator\Extension\GeocontactComponent;
 
 /**
  * The service provider.
@@ -38,9 +38,9 @@ return new class implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->registerServiceProvider(new MVCFactory('\\Joomla\\Component\\Geocontact'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Joomla\\Component\\Geocontact'));
-        $container->registerServiceProvider(new RouterFactory('\\Joomla\\Component\\Geocontact'));
+		$container->registerServiceProvider(new MVCFactory('\\Greenkey\\Component\\Geocontact'));
+		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Greenkey\\Component\\Geocontact'));
+        $container->registerServiceProvider(new RouterFactory('\\Greenkey\\Component\\Geocontact'));
 
         $container->set(
             ComponentInterface::class,

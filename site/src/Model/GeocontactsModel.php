@@ -7,15 +7,15 @@
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
 
-namespace Joomla\Component\Geocontact\Site\Model;
+namespace Greenkey\Component\Geocontact\Site\Model;
 
 // No direct access
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
-use Joomla\Component\Geocontact\Administrator\Helper\FormHelper;
-use Joomla\Component\Geocontact\Site\Helper\DatabaseHelper;
+use Greenkey\Component\Geocontact\Administrator\Helper\FormHelper;
+use Greenkey\Component\Geocontact\Site\Helper\DatabaseHelper;
 use Joomla\CMS\Form\Form;
 
 /**

@@ -7,7 +7,7 @@
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
 
-namespace Joomla\Component\Geocontact\Administrator\View\Geocontact;
+namespace Greenkey\Component\Geocontact\Administrator\View\Geocontact;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -17,7 +17,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\Component\Geocontact\Administrator\Helper\GeocontactHelper;
+use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Layout\FileLayout;
 

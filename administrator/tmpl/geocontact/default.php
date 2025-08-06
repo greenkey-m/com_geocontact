@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
-/** @var \Joomla\Component\Geocontact\Administrator\View\Geocontact\HtmlView $this */
+/** @var \Greenkey\Component\Geocontact\Administrator\View\Geocontact\HtmlView $this */
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();

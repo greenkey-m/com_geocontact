@@ -14,7 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\Component\Geocontact\Administrator\Helper\GeocontactHelper;
+use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 ?>
 <?php $listOrder = $this->listOrder; ?>
 <?php $listDirn = $this->listDirn;

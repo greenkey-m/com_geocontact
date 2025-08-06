@@ -7,7 +7,7 @@
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
 
-namespace Joomla\Component\Geocontact\Administrator\Table;
+namespace Greenkey\Component\Geocontact\Administrator\Table;
 
 // No direct access
 defined('_JEXEC') or die;

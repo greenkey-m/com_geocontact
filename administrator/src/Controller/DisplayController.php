@@ -7,7 +7,7 @@
  * @author      Matvey <info@greenkey.ru> - http://geocontact.greenkey.ru
  */
 
-namespace Joomla\Component\Geocontact\Administrator\Controller;
+namespace Greenkey\Component\Geocontact\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
