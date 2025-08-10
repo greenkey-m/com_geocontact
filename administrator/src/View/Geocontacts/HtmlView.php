@@ -197,10 +197,10 @@ class HtmlView extends BaseHtmlView
 		{
 			ToolbarHelper::preferences('com_geocontact');
 
-            $doc = Factory::getDocument();
+            $doc = Factory::getApplication()->getDocument();
             $doc->addStyleDeclaration('#toolbar-upload{float:right;} #toolbar-download{float:right;}');
-            ToolBarHelper::custom('geocontacts.uploadxml', 'upload.png', 'upload_f2.png', 'JTOOLBAR_UPLOADXML', false);
-            ToolBarHelper::custom('geocontacts.downloadxml', 'download.png', 'download_f2.png', 'JTOOLBAR_DOWNLOADXML', true);
+            ToolBarHelper::custom('geocontacts.uploadxml', 'upload.png', 'upload_f2.png', 'JTOOLBAR_UPLOAD', false);
+            ToolBarHelper::custom('geocontacts.downloadxml', 'download.png', 'download_f2.png', 'JTOOLBAR_EXPORT', true);
 		}
 		
 		JHtmlSidebar::addFilter(
