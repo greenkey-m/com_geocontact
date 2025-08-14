@@ -30,9 +30,9 @@
         <folder>src</folder>
         <folder>tmpl</folder>
     </files>
-    <languages folder="site">
-        <language tag="en-GB">language/en-GB/com_geocontact.ini</language>
-		<language tag="ru-RU">language/ru-RU/com_geocontact.ini</language>
+    <languages folder="language">
+        <language tag="en-GB">site/en-GB/com_geocontact.ini</language>
+		<language tag="ru-RU">site/ru-RU/com_geocontact.ini</language>
     </languages>
     <administration>
         <menu img="components/com_geocontact/assets/images/main-16x16-geocontact.png">COM_GEOCONTACT</menu>
@@ -49,11 +49,11 @@
             <folder>sql</folder>
             <folder>src</folder>
         </files>
-        <languages folder="administrator">
-            <language tag="en-GB">language/en-GB/com_geocontact.ini</language>
-			<language tag="en-GB">language/en-GB/com_geocontact.sys.ini</language>
-			<language tag="ru-RU">language/ru-RU/com_geocontact.ini</language>
-			<language tag="ru-RU">language/ru-RU/com_geocontact.sys.ini</language>
+        <languages folder="language">
+            <language tag="en-GB">administrator/en-GB/com_geocontact.ini</language>
+			<language tag="en-GB">administrator/en-GB/com_geocontact.sys.ini</language>
+			<language tag="ru-RU">administrator/ru-RU/com_geocontact.ini</language>
+			<language tag="ru-RU">administrator/ru-RU/com_geocontact.sys.ini</language>
         </languages>
     </administration>
     <!-- Generated with the ComponentGenerator.com -->
