@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Greenkey\Component\Geocontact\Administrator\Helper\FormHelper;
 use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 use Joomla\CMS\Form\Form;
+use JUri;
 
 /**
  * Geocontact model
@@ -213,7 +214,7 @@ class GeocontactsModel extends ListModel
             if ($town->alias == "") {
                 $town->alias = $this->rus2lat($town->caption);
             }
-            $table = $this->getTable();
+            $table = $this->getTable('Geocontact');
             $table->caption = (string) $town->caption;
             $table->alias = (string) $town->alias;
             $table->latlong = (string) $town->latlong;
@@ -222,6 +223,10 @@ class GeocontactsModel extends ListModel
             $table->address = (string) $town->address;
             $table->stand = (string) $town->stand;
             $table->description = (string) $town->description;
+
+            $user = Factory::getApplication()->getIdentity();
+            $table->created_by = $user->id;
+
             $table->store();
             //$table->publish();
         }

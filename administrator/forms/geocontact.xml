@@ -1,98 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Joomla\Component\Geocontact\Administrator\Field">
-	<fieldset name="details">
+    <fieldset name="details">
 
-       <field name="id" type="text" default="0" label="COM_GEOCONTACT_FORM_LBL_GEOCONTACT_ID"
-            readonly="true" class="readonly"
-            description="JGLOBAL_FIELD_ID_DESC" /> 
+        <field name="id" type="text" default="0" label="COM_GEOCONTACT_FORM_LBL_GEOCONTACT_ID"
+               readonly="true" class="readonly"
+               description="JGLOBAL_FIELD_ID_DESC"/>
 
-	   <field
-			name="description"
-			type="editor"
-			label="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_DESC"
-			filter="raw"
-			default=""
-			/>
-	
-		<field
-			name="stand"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_STAND_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_STAND_DESC"
-			default=""
-			/>
-	
-		<field
-			name="address"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_ADDRESS_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_ADDRESS_DESC"
-			default=""
-			/>
-	
-		<field
-			name="name"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_NAME_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_NAME_DESC"
-			default=""
-			/>
-	
-		<field
-			name="phones"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_PHONES_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_PHONES_DESC"
-			default=""
-			/>
-	
-		<field
-			name="latlong"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_LATLONG_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_LATLONG_DESC"
-			default=""
-			/>
-	
-		<field
-			name="caption"
-			type="text"
-			label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_CAPTION_DESC"
-			default=""
-			/>
-	
-		<field
-			name="created_by"
-			type="createdby"
-			label="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_DESC"
-			default=""
-			/>
-	
-		<field
-			name="state"
-			type="list"
-			label="COM_GEOCONTACT_GEOCONTACT_STATE_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_STATE_DESC"
-			class="inputbox"
-			size="1"
-			default="1"
-			>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="2">JARCHIVED</option>
-			<option value="-2">JTRASHED</option>
-		</field>
-	
-		<field
-			name="ordering"
-			type="hidden"
-			label="COM_GEOCONTACT_GEOCONTACT_ORDERING_LBL"
-			hint="COM_GEOCONTACT_GEOCONTACT_ORDERING_DESC"
-			default=""
-			/>
+        <field
+                name="description"
+                type="editor"
+                label="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_DESCRIPTION_DESC"
+                filter="raw"
+                default=""
+        />
 
-	</fieldset>
+        <field
+                name="stand"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_STAND_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_STAND_DESC"
+                default=""
+        />
+
+        <field
+                name="address"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_ADDRESS_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_ADDRESS_DESC"
+                default=""
+        />
+
+        <field
+                name="name"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_NAME_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_NAME_DESC"
+                default=""
+        />
+
+        <field
+                name="phones"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_PHONES_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_PHONES_DESC"
+                default=""
+        />
+
+        <field
+                name="latlong"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_LATLONG_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_LATLONG_DESC"
+                default=""
+        />
+
+        <field
+                name="caption"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_CAPTION_DESC"
+                default=""
+        />
+
+        <field
+                name="alias"
+                type="text"
+                label="COM_GEOCONTACT_GEOCONTACT_ALIAS_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_ALIAS_DESC"
+                default=""
+        />
+
+        <field
+                name="created_by"
+                type="user"
+                label="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_CREATED_BY_DESC"
+        />
+
+        <field
+                name="state"
+                type="list"
+                label="COM_GEOCONTACT_GEOCONTACT_STATE_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_STATE_DESC"
+                class="inputbox"
+                size="1"
+                default="1"
+        >
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+
+        <field
+                name="ordering"
+                type="hidden"
+                label="COM_GEOCONTACT_GEOCONTACT_ORDERING_LBL"
+                hint="COM_GEOCONTACT_GEOCONTACT_ORDERING_DESC"
+                default=""
+        />
+
+    </fieldset>
 </form>
