@@ -200,7 +200,7 @@ class GeocontactsModel extends ListModel
         return $s; // возвращаем результат return iconv("UTF-8","UTF-8//IGNORE", $s);
     }
 
-    public function newItems() {
+    public function loadItems() {
         $xmlfile = JURI::base() . 'components/com_geocontact/towns.xml';
         //$this->towns = JFactory::getXML($xmlfile, true);
         $towns = simplexml_load_string(file_get_contents($xmlfile));
@@ -234,5 +234,10 @@ class GeocontactsModel extends ListModel
         //$db = JFactory::getDbo();
         //$db->setQuery('SELECT MAX(ordering) FROM #__geocontact_geocontacts');
     }
+
+	public function saveItems()
+	{
+		echo "save!!!";
+	}
 
 }

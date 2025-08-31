@@ -129,6 +129,8 @@ class HtmlView extends BaseHtmlView
 		$state	= $this->get('State');
 		$canDo	= GeocontactHelper::getActions($state->get('filter.category_id'));
 
+		$user = $this->getCurrentUser();
+
 		$title = Text::_('COM_GEOCONTACT_TITLE_GEOCONTACTS');
 		$icon = 'fa fa-file-alt';
 
@@ -151,7 +153,23 @@ class HtmlView extends BaseHtmlView
         if ($canDo['core.edit'] && isset($this->items[0]))
 		{
 		    ToolbarHelper::editList('geocontact.edit','JTOOLBAR_EDIT');
-	    }
+
+			// TODO: sample
+			$toolbar = $this->getDocument()->getToolbar();
+			$dropdown = $toolbar->dropdownButton('status-group')
+				->text('JTOOLBAR_CHANGE_STATUS')
+				->toggleSplit(false)
+				->icon('icon-ellipsis-h')
+				->buttonClass('btn btn-action')
+				->listCheck(true);
+
+			$childBar = $dropdown->getChildToolbar();
+			$childBar->standardButton('transition', 'sample text')
+				->buttonClass('transition-1')
+				->icon('icon-project-diagram')
+				->onclick('geocontacts.publish');
+
+		}
 
 		if ($canDo['core.edit.state'])
 		{

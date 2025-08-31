@@ -24,11 +24,13 @@ class GeocontactsController extends AdminController
         $model = $this->getModel('geocontacts');
 
         // Create new items in DB
-        $model->newItems();
+        $model->loadItems();
     }
 
     public function downloadxml() {
+		$model = $this->getModel('geocontacts');
 
+		$model->saveItems();
     }
 
 }
