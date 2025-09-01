@@ -41,9 +41,9 @@ class GeocontactHelper
 	 * @return array
 	 * @since    1.6
 	 */
-	public static function getActions() : array
+	public static function getActions($id = 0) : array
 	{
-		$user	= Factory::getUser();
+		$user	= Factory::getApplication()->getIdentity();
 		$result	= [];
 
 		$assetName = 'com_geocontact';

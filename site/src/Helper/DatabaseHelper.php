@@ -12,6 +12,7 @@ namespace Greenkey\Component\Geocontact\Site\Helper;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Mysqli\MysqliQuery;
 
 /**
@@ -30,7 +31,7 @@ class DatabaseHelper
 	 */
     public static function buildSearchQuery(string $searchPhrase, array $searchColumns, MysqliQuery $query): MysqliQuery
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $where = [];
 

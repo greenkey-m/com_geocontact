@@ -12,22 +12,26 @@ namespace Greenkey\Component\Geocontact\Site\Model;
 // No direct access
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Greenkey\Component\Geocontact\Administrator\Helper\FormHelper;
 use Greenkey\Component\Geocontact\Site\Helper\DatabaseHelper;
 use Joomla\CMS\Form\Form;
+use Joomla\Database\QueryInterface;
 
 /**
  * Geocontact list model
+ * @since 5.0.0
  */
 class GeocontactsModel extends ListModel
 {
     /**
-     * @param    array          $config     An optional associative array of configuration settings
+     * @param array $config An optional associative array of configuration settings
      *
-     * @see      JController
+     * @throws Exception
      * @since    1.6
+     * @see      JController
      */
     public function __construct($config = array())
     {
@@ -63,7 +67,7 @@ class GeocontactsModel extends ListModel
      * @throws Exception
      * @since   1.6
      */
-    protected function populateState($ordering = null, $direction = null)
+    protected function populateState($ordering = null, $direction = null): void
     {
         $app = Factory::getApplication();
         $input = $app->input;
@@ -82,12 +86,15 @@ class GeocontactsModel extends ListModel
     /**
      * Build an SQL query to load the list data
      *
-     * @return    DatabaseQuery
+     * @return    QueryInterface
      * @since    1.6
      */
     protected function getListQuery()
     {
-        $query = $this->_db->getQuery(true);
+        // Create a new query object.
+        $db = $this->getDatabase();
+
+        $query = $db->getQuery(true);
 
         $query->select('a.id, a.description, a.stand');
 		$query->select('a.address, a.name, a.phones');

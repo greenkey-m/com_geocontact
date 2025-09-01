@@ -15,20 +15,19 @@ use Joomla\CMS\MVC\Controller\BaseController;
 
 /**
  * Geocontact list controller
+ * @since 1.0
  */
 class GeocontactsController extends BaseController
 {
 	/**
 	 * Proxy for getModel.
-	 * @since    1.6
-	 *
-	 * @param string $name
-	 * @param string $prefix
-	 *
-	 * @return mixed
+     * @param string $name
+     * @param string $prefix
+     * @param array $config * @return mixed
+	 *@since    1.6
 	 */
-	public function &getModel($name = 'geocontact', $prefix = 'Administrator')
-	{
-		return parent::getModel($name, $prefix, ['ignore_request' => true]);
+	public function getModel($name = 'geocontact', $prefix = 'Administrator', $config = ['ignore_request' => true])
+    {
+		return parent::getModel($name, $prefix, $config);
 	}
 }

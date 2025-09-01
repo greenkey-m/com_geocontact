@@ -12,31 +12,36 @@ namespace Greenkey\Component\Geocontact\Site\Model;
 // No direct access
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Greenkey\Component\Geocontact\Administrator\Helper\FormHelper;
 use Greenkey\Component\Geocontact\Site\Helper\DatetimeHelper;
+use RuntimeException;
 
 /**
  * Geocontact detail model
+ * @since 5.0.0
  */
 class GeocontactModel extends FormModel
 {
 	/**
 	 * The item to hold data
-	 *
+     *
+	 * @since 5.0.0
 	 * @return object
 	 */
-    protected $_item;
+    protected object $_item;
 
     /**
+     * @since 5.0.0
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     private function fetchItem()
     {
-        $db = $this->getDbo();
+        $db = $this->getDatabase();
         $query = $db->getQuery(true);
 
         $query->select('a.id, a.description, a.stand');
@@ -54,20 +59,23 @@ class GeocontactModel extends FormModel
 
         try {
             $db->execute();
-        } catch (\RuntimeException $e) {
-            throw new \Exception($e->getMessage(), 500);
+        } catch (RuntimeException $e) {
+            throw new RuntimeException($e->getMessage(), 500);
         }
 
         $this->_item = $db->loadObject();
     }
 
     /**
+     * @since 5.0.0
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     private function getId(): int
     {
-        $app = Factory::getApplication();
+        if (!$app = Factory::getApplication()) {
+            throw new RuntimeException('Error app');
+        }
 
         $id = $app->input->getInt('id');
         $params = $app->getParams();
@@ -77,7 +85,7 @@ class GeocontactModel extends FormModel
             return (int)$paramId;
         }
 
-        return (int)$id;
+        return $id;
     }
 
     /**
@@ -87,11 +95,11 @@ class GeocontactModel extends FormModel
      *
      * @return  object
      *
-     * @throws \Exception
+     * @throws Exception
      * @since   1.6
      */
-	public function getItem($pk = null)
-	{
+	public function getItem($pk = null): object
+    {
 		if (isset($this->_item)) {
 			return $this->_item;
 		}
@@ -112,17 +120,19 @@ class GeocontactModel extends FormModel
      *
      * The base form is loaded from XML
      *
-     * @param	array	$data		An optional array of data for the form to interogate.
-     * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
-     * @return	Form	A JForm object on success, false on failure
-     * @throws \Exception
-     * @since	1.6
+     * @param array $data An optional array of data for the form to interogate.
+     * @param boolean $loadData True if the form is to load its own data (default case), false if not.
+     * @return false|Form A JForm object on success, false on failure
+     * @throws Exception
+     * @since    1.6
      */
-    public function getForm($data = [], $loadData = true)
+    public function getForm($data = [], $loadData = true): false|Form
     {
         Form::addFormPath(JPATH_ADMINISTRATOR . '/components/com_geocontact/forms');
 
-        $app = Factory::getApplication();
+        if (!$app = Factory::getApplication()) {
+            throw new RuntimeException('Error app');
+        }
         $id = $app->input->getInt('id');
         $params = $app->getParams();
         $paramId = $params->get('id');

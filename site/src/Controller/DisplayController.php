@@ -11,6 +11,7 @@ namespace Greenkey\Component\Geocontact\Site\Controller;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
@@ -28,14 +29,14 @@ class DisplayController extends BaseController
      * @param mixed|boolean $urlparams An array of safe URL parameters and their
      *                                     variable types, for valid values see {@link \JFilterInput::clean()}.
      *
-     * @return JControllerLegacy|BaseController
+     * @return DisplayController
      *
      * @throws Exception
      * @since   3.1
      */
 	public function display($cachable = false, $urlparams = false)
 	{
-		$user = Factory::getUser();
+		$user = Factory::getApplication()->getIdentity();
 
 		// Set the default view name and format from the Request
 		$vName = $this->input->get('view', 'Geocontacts');
@@ -55,8 +56,9 @@ class DisplayController extends BaseController
 			'lang'             => 'CMD'
 		);
 
-        Factory::getLanguage()->load('com_geocontact', JPATH_ADMINISTRATOR, 'en-GB', true);
+        Factory::getApplication()->getLanguage()->load('com_geocontact', JPATH_ADMINISTRATOR, 'en-GB', true);
 
-		return parent::display($cachable, $safeurlparams);
+		parent::display($cachable, $safeurlparams);
+        return $this;
 	}
 }

@@ -13,12 +13,14 @@ namespace Greenkey\Component\Geocontact\Site\View\Geocontact;
 defined('_JEXEC') or die;
 
 use Exception;
+use Greenkey\Component\Geocontact\Site\Helper\AccessHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
+use RuntimeException;
 
 /**
  * Geocontact detail view
@@ -31,7 +33,7 @@ class HtmlView extends BaseHtmlView
      * @var    object
      * @since  1.5
      */
-    protected $item;
+    protected object $item;
 
     /**
      * The pagination object
@@ -39,7 +41,7 @@ class HtmlView extends BaseHtmlView
      * @var    ?Pagination
      * @since  1.6
      */
-    protected $pagination;
+    protected ?Pagination $pagination;
 
     /**
      * The form object
@@ -55,7 +57,7 @@ class HtmlView extends BaseHtmlView
      * @var    object
      * @since  1.5
      */
-    protected $state;
+    protected object $state;
 
     /**
      * The component params
@@ -63,7 +65,7 @@ class HtmlView extends BaseHtmlView
      * @var    Registry
      * @since  1.5
      */
-    protected $params;
+    protected Registry $params;
 
 	/**
 	 * @throws Exception
@@ -121,7 +123,7 @@ class HtmlView extends BaseHtmlView
 
 
         if (count($errors = $this->get('Errors'))) {
-            throw new Exception(implode("\n", $errors));
+            throw new RuntimeException(implode("\n", $errors));
         }
 
         $this->setupDocument();
@@ -144,9 +146,9 @@ class HtmlView extends BaseHtmlView
     private function hasAccess(): bool
     {
         $app = Factory::getApplication();
-        $user = Factory::getUser();
+        $user = $app->getIdentity();
 
-        if($this->_layout == 'edit') {
+        if($this->_layout === 'edit') {
             $isEdit = ($app->input->getInt('id', 0) || $this->params->get('id'));
             if ($isEdit) {
                 $authorised = $user->authorise('core.edit', 'com_geocontact');
@@ -175,19 +177,17 @@ class HtmlView extends BaseHtmlView
      */
     protected function setupDocument(): void
     {
-        $document = Factory::getDocument();
-        $app   = Factory::getApplication();
-
+        $app = Factory::getApplication();
+        if ($app === null) {
+            return;
+        }
+        $document = $app->getDocument();
         if ($document === null) {
             return;
         }
 	    $wa = $document->getWebAssetManager();
 	    $wa->registerAndUseStyle('my-style', 'components/com_geocontact/assets/css/geocontact.css');
 	    $wa->registerAndUseScript('my-script', 'components/com_geocontact/assets/js/detail.js');
-
-        if ($app === null) {
-            return;
-        }
 
         $menus = $app->getMenu();
         if ($menus === null) {
@@ -211,18 +211,18 @@ class HtmlView extends BaseHtmlView
             $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
         }
 
-        $this->document->setTitle($title);
+        $this->getDocument()->setTitle($title);
 
         if ($this->params->get('menu-meta_description')) {
-            $this->document->setDescription($this->params->get('menu-meta_description'));
+            $this->getDocument()->setDescription($this->params->get('menu-meta_description'));
         }
 
         if ($this->params->get('menu-meta_keywords')) {
-            $this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
+            $this->getDocument()->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
         }
 
         if ($this->params->get('robots')) {
-            $this->document->setMetadata('robots', $this->params->get('robots'));
+            $this->getDocument()->setMetadata('robots', $this->params->get('robots'));
         }
     }
 }

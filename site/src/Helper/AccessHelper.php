@@ -12,6 +12,8 @@ namespace Greenkey\Component\Geocontact\Site\Helper;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use RuntimeException;
 
 /**
  * Geocontact access helper
@@ -27,8 +29,11 @@ class AccessHelper
      */
     public function preloadOwnRecords(string $table): void
     {
-        $user = Factory::getUser();
-        $db = Factory::getDbo();
+        if (!$app = Factory::getApplication()) {
+            return;
+        }
+        $user = $app->getIdentity();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
             ->select('id, created_by')
             ->from($table)
@@ -49,9 +54,11 @@ class AccessHelper
     public function canAccessOwnRecord(?int $id = null): bool
     {
         if (!$this->ownRecordsLoaded) {
-            throw new \Exception('Please preload records before calling the ' . __METHOD__ . ' method');
+            throw new RuntimeException('Please preload records before calling the ' . __METHOD__ . ' method');
         }
-        $app = Factory::getApplication();
+        if (!$app = Factory::getApplication()) {
+            return false;
+        }
         if (empty($id)) {
             $id = $app->input->getInt('id');
             $params = $app->getParams();
@@ -61,7 +68,7 @@ class AccessHelper
                 $id = $paramId;
             }
         }
-        $user = Factory::getUser();
+        $user = $app->getIdentity();
         $userId = $this->ownRecordsById[$id] ?? 0;
         return $userId === (int)$user->id && $user->authorise('core.edit.own', 'com_geocontact');
     }

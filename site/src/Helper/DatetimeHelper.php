@@ -9,6 +9,8 @@
 
 namespace Greenkey\Component\Geocontact\Site\Helper;
 
+use DateTime;
+
 defined('_JEXEC') or die;
 
 /**
@@ -43,7 +45,7 @@ class DatetimeHelper
     public static function convertFromStrftimeFormat(string $value, string $strftimeFormat): string
     {
         $phpFormat = self::convertStrftimeToDateTimeFormat($strftimeFormat);
-        $datetime = \DateTime::createFromFormat($phpFormat, $value);
+        $datetime = DateTime::createFromFormat($phpFormat, $value);
 
         if (!$datetime) {
             return '';
