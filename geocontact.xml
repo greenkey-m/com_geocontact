@@ -44,6 +44,7 @@
         <menu img="components/com_geocontact/assets/images/main-16x16-geocontact.png">COM_GEOCONTACT</menu>
         <submenu>
             <menu link="option=com_geocontact&amp;view=geocontacts" view="geocontacts" img="components/com_geocontact/assets/images/view-16x16-geocontacts.png" alt="Geocontact/Geocontacts">COM_GEOCONTACT_TITLE_GEOCONTACTS</menu>
+            <menu link="option=com_categories&amp;extension=com_geocontact">JCATEGORIES</menu>
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>

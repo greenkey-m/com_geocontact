@@ -56,6 +56,18 @@
         />
 
         <field
+                name="catid"
+                type="category"
+                extension="com_geocontact"
+                class="inputbox"
+                default=""
+                label="JCATEGORY"
+                required="true"
+        >
+            <option value="0">JOPTION_SELECT_CATEGORY</option>
+        </field>
+
+        <field
                 name="caption"
                 type="text"
                 label="COM_GEOCONTACT_GEOCONTACT_CAPTION_LBL"

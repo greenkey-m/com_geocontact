@@ -109,9 +109,10 @@ class GeocontactsModel extends ListModel
         $query->select('a.latlong, a.caption, a.state');
         $query->select('a.ordering');
 
-        $query->from('`#__geocontact_geocontacts` AS a');
+        $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
 
         $query->select('i.name AS `created_by`');
+        $query->join('LEFT', $this->_db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
         $query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
 
         // Filter by published state
