@@ -11,16 +11,37 @@ namespace Greenkey\Component\Geocontact\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
+use Joomla\CMS\Categories\CategoryServiceInterface;
+use Joomla\CMS\Categories\CategoryServiceTrait;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
+use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
+use Joomla\Database\DatabaseAwareTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * Component class for com_contact
  *
  * @since  4.0.0
  */
-class GeocontactComponent extends MVCComponent implements RouterServiceInterface
+class GeocontactComponent extends MVCComponent implements RouterServiceInterface, CategoryServiceInterface, BootableExtensionInterface
 {
 	use RouterServiceTrait;
+    use CategoryServiceTrait;
+    use DatabaseAwareTrait;
+
+    // Static variable to store the Categories instance
+    public static $categories;
+
+    public function boot(ContainerInterface $container)
+    {
+        self::$categories = $this->categoryFactory->createCategory();
+    }
+
+    protected function getTableNameForSection(?string $section = null)
+    {
+        return "geocontact_geocontacts";
+    }
+
 }

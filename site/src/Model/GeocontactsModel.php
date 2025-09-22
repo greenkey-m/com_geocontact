@@ -38,16 +38,16 @@ class GeocontactsModel extends ListModel
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',
-				'description', 'a.description',
-				'stand', 'a.stand',
-				'address', 'a.address',
-				'name', 'a.name',
-				'phones', 'a.phones',
-				'latlong', 'a.latlong',
-				'caption', 'a.caption',
-				'created_by', 'a.created_by',
-				'state', 'a.state',
-				'ordering', 'a.ordering',
+                'description', 'a.description',
+                'stand', 'a.stand',
+                'address', 'a.address',
+                'name', 'a.name',
+                'phones', 'a.phones',
+                'latlong', 'a.latlong',
+                'caption', 'a.caption',
+                'created_by', 'a.created_by',
+                'state', 'a.state',
+                'ordering', 'a.ordering',
             );
         }
 
@@ -97,14 +97,16 @@ class GeocontactsModel extends ListModel
         $query = $db->getQuery(true);
 
         $query->select('a.id, a.description, a.stand');
-		$query->select('a.address, a.name, a.phones');
-		$query->select('a.latlong, a.caption, a.state');
-		$query->select('a.ordering');
+        $query->select('a.address, a.name, a.phones');
+        $query->select('a.latlong, a.caption, a.state');
+        $query->select('a.ordering');
+        $query->select('c.title AS `category_title` ');
 
-        $query->from('`#__geocontact_geocontacts` AS a');
+        $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
 
-        		$query->select('i.name AS `created_by`');
-		$query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
+        $query->select('i.name AS `created_by`');
+        $query->join('LEFT', $this->_db->qn('#__categories', 'c') . ' ON c.id = a.catid');
+        $query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
 
         $query->where('a.state = 1');
 
@@ -114,20 +116,19 @@ class GeocontactsModel extends ListModel
         // Search in these columns
         $searchColumns = [
             'a.description',
-			'a.stand',
-			'a.address',
-			'a.name',
-			'a.phones',
-			'a.latlong',
-			'a.caption',
-			'i.name',
+            'a.stand',
+            'a.address',
+            'a.name',
+            'a.phones',
+            'a.latlong',
+            'a.caption',
+            'i.name',
         ];
 
         if (!empty($searchWord)) {
-            if (stripos($searchWord, 'id:') === 0)
-            {
+            if (stripos($searchWord, 'id:') === 0) {
                 // Build the ID search
-                $idPart = (int) substr($searchWord, 3);
+                $idPart = (int)substr($searchWord, 3);
                 $query->where($this->_db->qn('a.id') . ' = ' . $this->_db->q($idPart));
             } else {
                 $query = DatabaseHelper::buildSearchQuery($searchWord, $searchColumns, $query);

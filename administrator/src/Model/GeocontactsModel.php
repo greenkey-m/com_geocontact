@@ -11,6 +11,7 @@ namespace Greenkey\Component\Geocontact\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
@@ -108,6 +109,7 @@ class GeocontactsModel extends ListModel
         $query->select('a.address, a.name, a.phones');
         $query->select('a.latlong, a.caption, a.state');
         $query->select('a.ordering');
+        $query->select('c.title AS `category_title` ');
 
         $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
 
@@ -227,6 +229,15 @@ class GeocontactsModel extends ListModel
         //$this->towns = $this->towns[2]->attributes();
         //print_r($towns);
 
+        $categories = Categories::getInstance('geocontact');
+        $rootNode = $categories->get();
+        $categoryNodes = $rootNode->getChildren();
+        $regions = [];
+        foreach ($categoryNodes as $node) {
+            $regions[$node->title] = $node->id;
+        }
+
+
         foreach ($towns as $town) {
             echo "<p>" . $town->caption . "</p>\n";
             // Получаем экземпляр класса TableGeocontact.
@@ -238,6 +249,12 @@ class GeocontactsModel extends ListModel
             $table->caption = (string)$town->caption;
             $table->alias = (string)$town->alias;
             $table->latlong = (string)$town->latlong;
+
+            // Добавляем категорию по названию, если такие есть
+            if (array_key_exists((string)$town['region'], $regions)) {
+                $table->catid = $regions[(string)$town['region']];
+            }
+
             $table->phones = (string)$town->phones;
             $table->name = (string)$town->name;
             $table->address = (string)$town->address;
