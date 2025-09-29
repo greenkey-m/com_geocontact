@@ -57,16 +57,19 @@ class Router extends RouterView
 
         if (isset($query['view']))
         {
+            // вместо этого надо категорию - алиас!
             $segments[] = $query['view'];
             unset($query['view']);
         }
 
         if (isset($query['id']))
         {
+            // сюда добавить alias
             $segments[] = $query['id'];
             unset($query['id']);
         }
 
+        unset($query['Itemid']);
         return $segments;
     }
 

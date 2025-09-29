@@ -97,6 +97,9 @@ class HtmlView extends BaseHtmlView
 
         $this->setupDocument();
 
+        // TODO: restore towns, или изменить подачу! в шаблон
+        $this->towns = [];
+
         parent::display($tpl);
 	}
 

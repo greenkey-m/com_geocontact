@@ -101,6 +101,7 @@ class GeocontactsModel extends ListModel
         $query->select('a.latlong, a.caption, a.state');
         $query->select('a.ordering');
         $query->select('c.title AS `category_title` ');
+        $query->select('c.id AS `category_id` ');
 
         $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
 
