@@ -12,12 +12,16 @@ namespace Greenkey\Component\Geocontact\Site\Service;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Menu\AbstractMenu;
+use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 
 /**
  * Routing class for the com_geocontact component
@@ -26,14 +30,18 @@ use Joomla\CMS\Menu\AbstractMenu;
  */
 class Router extends RouterView
 {
+    private CategoryFactoryInterface $categoryFactory;
+
     /**
-     * @param   SiteApplication  $app   The application object
-     * @param   AbstractMenu     $menu  The menu object to work with
+     * @param SiteApplication $app The application object
+     * @param AbstractMenu $menu The menu object to work with
      */
-    public function __construct(SiteApplication $app, AbstractMenu $menu)
+    public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory)
     {
+        $this->categoryFactory = $categoryFactory;
+
         $this->registerView(new RouterViewConfiguration('geocontacts'));
-		$this->registerView(new RouterViewConfiguration('geocontact'));
+        $this->registerView(new RouterViewConfiguration('geocontact'));
 
         parent::__construct($app, $menu);
 
@@ -45,7 +53,7 @@ class Router extends RouterView
     /**
      * Build the route for the com_geocontact component
      *
-     * @param   array  &$query  An array of URL arguments
+     * @param array  &$query An array of URL arguments
      *
      * @return  array  The URL arguments to use to assemble the subsequent URL
      *
@@ -55,20 +63,31 @@ class Router extends RouterView
     {
         $segments = array();
 
-        if (isset($query['view']))
-        {
-            // вместо этого надо категорию - алиас!
-            $segments[] = $query['view'];
+        if (isset($query['id'], $query['catid'])) {
+            // Get DB
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            // Get item info
+            $itemId = (int)$query['id'];
+            $item = $db->setQuery('SELECT alias, catid FROM #__geocontact_geocontacts WHERE id = ' . $itemId)->loadObject();
+
+            //$sample = $this->categories->get($item->category_id);
+
+            if ($item) {
+                // Get category alias using CategoryFactory
+                $options = ['access' => false];
+                $categories = $this->categoryFactory->createCategory($options);
+                $category = $categories->get($item->catid);
+                $catAlias = $category->alias ?? '';
+                // Add category alias and item alias
+                $segments[] = $catAlias;
+                $segments[] = $item->alias;
+            }
+            unset($query['id'], $query['catid']);
+        }
+
+        if (isset($query['view'])) {
             unset($query['view']);
         }
-
-        if (isset($query['id']))
-        {
-            // сюда добавить alias
-            $segments[] = $query['id'];
-            unset($query['id']);
-        }
-
         unset($query['Itemid']);
         return $segments;
     }
@@ -76,7 +95,7 @@ class Router extends RouterView
     /**
      * Parse the segments of a URL.
      *
-     * @param   array  &$segments  The segments of the URL to parse.
+     * @param array  &$segments The segments of the URL to parse.
      *
      * @return  array  The URL attributes to be used by the application.
      *
@@ -89,24 +108,32 @@ class Router extends RouterView
         // View is always the first element of the array
         $count = count($segments);
 
-        if ($count)
-        {
+        if ($count) {
             $segment = array_shift($segments);
 
-            if (is_numeric($segment))
-            {
+            if (is_numeric($segment)) {
                 $vars['id'] = $segment;
-            }
-            else
-            {
-                $vars['view'] = $segment;
+            } else {
+                $vars['view'] = "geocontact";
             }
 
             $segment = array_shift($segments);
 
-            if (is_numeric($segment))
-            {
+            if (is_numeric($segment)) {
                 $vars['id'] = $segment;
+            } else {
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
+                // Get item info
+                $alias = (string)$segment;
+
+                $dbquery = $db->getQuery(true);
+                $dbquery->select('id, catid')
+                    ->from('#__geocontact_geocontacts')
+                    ->where($dbquery->quoteName('alias') . ' = :a')
+                    ->bind(':a', $alias, ParameterType::STRING);
+                $item = $db->setQuery($dbquery)->loadObject();
+                $vars['id'] = $item->id;
+                $vars['catid'] = $item->catid;
             }
         }
 

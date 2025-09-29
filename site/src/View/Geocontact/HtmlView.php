@@ -136,6 +136,9 @@ class HtmlView extends BaseHtmlView
         //$this->towns = $this->towns[2]->attributes();
          */
 
+        // TODO: restore towns, или изменить подачу! в шаблон
+        $this->towns = [];
+
         parent::display($tpl);
     }
 
