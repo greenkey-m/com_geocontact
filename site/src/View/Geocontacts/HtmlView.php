@@ -62,11 +62,6 @@ class HtmlView extends BaseHtmlView
 	protected $params;
 
 	/**
-	 * The ID of the item
-	 */
-    protected $item_id;
-
-	/**
 	 * @param null $tpl
 	 *
 	 * @throws Exception
@@ -80,8 +75,7 @@ class HtmlView extends BaseHtmlView
         $user = $app->getIdentity();
 
         $this->params = $app->getParams('com_geocontact');
-        $this->item_id = $app->input->getInt('Itemid', 0);
-        
+
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');

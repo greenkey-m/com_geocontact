@@ -12,6 +12,7 @@ namespace Greenkey\Component\Geocontact\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use Greenkey\Component\Geocontact\Site\Helper\LegacyRouteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
@@ -36,6 +37,8 @@ class DisplayController extends BaseController
      */
 	public function display($cachable = false, $urlparams = false)
 	{
+		LegacyRouteHelper::redirectIfNeeded();
+
 		$user = Factory::getApplication()->getIdentity();
 
 		// Set the default view name and format from the Request

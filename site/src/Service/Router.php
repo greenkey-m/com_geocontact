@@ -49,10 +49,11 @@ class Router extends RouterView
         $this->categoryFactory = $categoryFactory;
         $this->db              = $db;
 
-        $this->registerView(new RouterViewConfiguration('geocontacts'));
+        $geocontacts = new RouterViewConfiguration('geocontacts');
+        $this->registerView($geocontacts);
 
         $geocontact = new RouterViewConfiguration('geocontact');
-        $geocontact->setKey('id');
+        $geocontact->setKey('id')->setParent($geocontacts);
         $this->registerView($geocontact);
 
         parent::__construct($app, $menu);

@@ -72,37 +72,37 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 <?php foreach ($this->items as $i => $item) : ?>
                 <tr class="<?php echo ($i % 2) ? 'odd' : 'even'; ?>">
                     <td class="item-description">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->description; ?>
 						</a>
 					</td>
 					<td class="item-stand">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->stand; ?>
 						</a>
 					</td>
 					<td class="item-address">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->address; ?>
 						</a>
 					</td>
 					<td class="item-name">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->name; ?>
 						</a>
 					</td>
 					<td class="item-phones">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->phones; ?>
 						</a>
 					</td>
 					<td class="item-latlong">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->latlong; ?>
 						</a>
 					</td>
 					<td class="item-caption">
-						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . $item->id . '&Itemid=' . $this->item_id); ?>">
+						<a href="<?php echo Route::_('index.php?option=com_geocontact&view=geocontact&id=' . (int) $item->id); ?>">
 							<?php echo $item->caption; ?>
 						</a>
 					</td>
@@ -118,7 +118,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </div>
         <input type="hidden" name="view" value="geocontacts" />
         <input type="hidden" name="option" value="com_geocontact" />
-        <input type="hidden" name="Itemid" value="<?php echo $this->item_id; ?>" />
         <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
         <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
     </div>
