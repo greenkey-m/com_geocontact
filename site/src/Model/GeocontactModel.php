@@ -32,7 +32,7 @@ class GeocontactModel extends FormModel
 	 * @since 5.0.0
 	 * @return object
 	 */
-    protected object $_item;
+    protected ?object $_item = null;
 
     /**
      * @since 5.0.0
@@ -49,10 +49,12 @@ class GeocontactModel extends FormModel
 		$query->select('a.latlong, a.caption, a.state');
 		$query->select('a.ordering');
 
-        $query->from('#__geocontact_geocontacts as a');
+        $query->from($db->quoteName('#__geocontact_geocontacts', 'a'));
 
-        		$query->select('i.name AS `created_by`');
-		$query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
+        $query->select('c.title AS category_title, c.alias AS category_alias, a.catid');
+        $query->leftJoin($db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
+        $query->select('i.name AS `created_by`');
+        $query->leftJoin($db->quoteName('#__users', 'i') . ' ON i.id = a.created_by');
 
         $query->where($db->qn('a.id') . ' = ' . $db->q($this->getId()));
         $db->setQuery($query);
@@ -77,12 +79,12 @@ class GeocontactModel extends FormModel
             throw new RuntimeException('Error app');
         }
 
-        $id = $app->input->getInt('id');
+        $id = $app->input->getInt('id', 0);
         $params = $app->getParams();
+        $paramId = (int) $params->get('id');
 
-        $paramId = $params->get('id');
-        if ($paramId && $id === null) {
-            return (int)$paramId;
+        if ($paramId && !$id) {
+            return $paramId;
         }
 
         return $id;
@@ -98,13 +100,17 @@ class GeocontactModel extends FormModel
      * @throws Exception
      * @since   1.6
      */
-	public function getItem($pk = null): object
+	public function getItem($pk = null): ?object
     {
-		if (isset($this->_item)) {
+		if ($this->_item !== null) {
 			return $this->_item;
 		}
 
         $this->fetchItem();
+
+        if ($this->_item === null) {
+            return null;
+        }
 
         Form::addFormPath(JPATH_ADMINISTRATOR . '/components/com_geocontact/forms');
         $form = $this->loadForm('com_geocontact.geocontact', 'geocontact', [
@@ -112,6 +118,7 @@ class GeocontactModel extends FormModel
             'load_data' => true
         ]);
         $formHelper = new FormHelper($form);
+
         return $formHelper->appendFieldOptions([$this->_item])->getOne();
 	}
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addfieldprefix="Joomla\Component\Geocontact\Administrator\Field">
+<form addfieldprefix="Greenkey\Component\Geocontact\Administrator\Field">
     <fieldset name="details">
 
         <field name="id" type="text" default="0" label="COM_GEOCONTACT_FORM_LBL_GEOCONTACT_ID"

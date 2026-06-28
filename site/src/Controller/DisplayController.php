@@ -39,10 +39,10 @@ class DisplayController extends BaseController
 		$user = Factory::getApplication()->getIdentity();
 
 		// Set the default view name and format from the Request
-		$vName = $this->input->get('view', 'Geocontacts');
+		$vName = $this->input->getCmd('view', 'geocontacts');
 		$this->input->set('view', $vName);
 
-		if ($user->get('id') || ($this->input->getMethod() === 'POST' && $vName === 'Geocontacts')) {
+		if ($user->id || ($this->input->getMethod() === 'POST' && $vName === 'geocontacts')) {
 			$cachable = false;
 		}
 

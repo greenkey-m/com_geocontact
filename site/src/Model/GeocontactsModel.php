@@ -103,11 +103,11 @@ class GeocontactsModel extends ListModel
         $query->select('c.title AS `category_title` ');
         $query->select('c.id AS `category_id` ');
 
-        $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
+        $query->from($db->quoteName('#__geocontact_geocontacts', 'a'));
 
         $query->select('i.name AS `created_by`');
-        $query->join('LEFT', $this->_db->qn('#__categories', 'c') . ' ON c.id = a.catid');
-        $query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
+        $query->join('LEFT', $db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
+        $query->leftJoin($db->quoteName('#__users', 'i') . ' ON i.id = a.created_by');
 
         $query->where('a.state = 1');
 
@@ -130,20 +130,20 @@ class GeocontactsModel extends ListModel
             if (stripos($searchWord, 'id:') === 0) {
                 // Build the ID search
                 $idPart = (int)substr($searchWord, 3);
-                $query->where($this->_db->qn('a.id') . ' = ' . $this->_db->q($idPart));
+                $query->where($db->quoteName('a.id') . ' = ' . $db->quote($idPart));
             } else {
                 $query = DatabaseHelper::buildSearchQuery($searchWord, $searchColumns, $query);
             }
         }
 
-        $query->group($this->_db->qn('a.id'));
+        $query->group($db->quoteName('a.id'));
 
         // Add the list ordering clause
         $orderCol = $this->state->get('list.ordering');
         $orderDirn = $this->state->get('list.direction');
 
         if ($orderCol && $orderDirn) {
-            $query->order($this->_db->escape($orderCol . ' ' . $orderDirn));
+            $query->order($db->escape($orderCol . ' ' . $orderDirn));
         } else {
             $query->order('a.ordering');
         }

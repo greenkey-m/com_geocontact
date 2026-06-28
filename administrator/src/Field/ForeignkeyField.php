@@ -15,6 +15,8 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Exception;
 
 /**
@@ -41,9 +43,8 @@ class ForeignkeyField extends ListField
      */
     protected function getInput()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        // Define the attributes to load
         $attributesToLoad = ['table', 'key', 'value', 'sql_where', 'sql_group', 'sql_order'];
 
         $attributes = [];
@@ -52,25 +53,25 @@ class ForeignkeyField extends ListField
         }
 
         $query = $db->getQuery(true)
-            ->select($db->qn([$attributes['key'], $attributes['value']]))
-            ->from($db->qn($attributes['table']));
+            ->select($db->quoteName([$attributes['key'], $attributes['value']]))
+            ->from($db->quoteName($attributes['table']));
 
         if ($attributes['sql_where']) {
             $query->where($attributes['sql_where']);
         } else {
-            $query->where($db->qn('state') . ' = ' . self::STATE_PUBLISHED);
+            $query->where($db->quoteName('state') . ' = ' . self::STATE_PUBLISHED);
         }
 
         if ($attributes['sql_group']) {
             $query->group($attributes['sql_group']);
         } else {
-            $query->group($db->qn($attributes['value']));
+            $query->group($db->quoteName($attributes['value']));
         }
 
         if ($attributes['sql_order']) {
             $query->order($attributes['sql_order']);
         } else {
-            $query->order($db->qn($attributes['value']));
+            $query->order($db->quoteName($attributes['value']));
         }
 
         $db->setQuery($query);
@@ -89,10 +90,11 @@ class ForeignkeyField extends ListField
         $key = $this->value;
         if (!Factory::getApplication()->isClient('administrator')) {
             $query = $db->getQuery(true)
-                ->select($db->qn($attributes['key']))
-                ->from($db->qn($attributes['table']))
-                ->where($db->qn('state') . ' = ' . self::STATE_PUBLISHED)
-                ->where($db->qn($attributes['value']) . ' = ' . $db->q($this->value));
+                ->select($db->quoteName($attributes['key']))
+                ->from($db->quoteName($attributes['table']))
+                ->where($db->quoteName('state') . ' = ' . self::STATE_PUBLISHED)
+                ->where($db->quoteName($attributes['value']) . ' = :value')
+                ->bind(':value', $this->value, ParameterType::STRING);
             $db->setQuery($query);
             $key = $db->loadResult();
         }

@@ -60,10 +60,10 @@ class AccessHelper
             return false;
         }
         if (empty($id)) {
-            $id = $app->input->getInt('id');
+            $id = $app->input->getInt('id', 0);
             $params = $app->getParams();
 
-            $paramId = $params->get('id');
+            $paramId = (int) $params->get('id');
             if ($paramId && !$id) {
                 $id = $paramId;
             }

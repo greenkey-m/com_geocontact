@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\UCM\UCMType;
+use Joomla\Database\DatabaseInterface;
 use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 
 /**
@@ -77,19 +78,16 @@ class GeocontactModel extends AdminModel
 	 */
 	protected function prepareTable($table)
 	{
-		jimport('joomla.filter.output');
-
 		if (empty($table->id))
 		{
-			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
-                    ->from($db->qn('#__geocontact_geocontacts'));
+                    ->from($db->quoteName('#__geocontact_geocontacts'));
 				$db->setQuery($query);
 				$max = $db->loadResult();
-				$table->ordering = $max+1;
+				$table->ordering = $max + 1;
 			}
 		}
 	}
@@ -109,7 +107,7 @@ class GeocontactModel extends AdminModel
 			$this->batchSet = true;
 
 			// Get current user
-			$this->user = Factory::getUser();
+			$this->user = Factory::getApplication()->getIdentity();
 
 			// Get table
 			$this->table = $this->getTable();

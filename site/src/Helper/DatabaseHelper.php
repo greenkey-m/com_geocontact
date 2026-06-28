@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\Mysqli\MysqliQuery;
+use Joomla\Database\QueryInterface;
 
 /**
  * Geocontact database helper
@@ -29,7 +29,7 @@ class DatabaseHelper
 	 *
 	 * @return	MysqliQuery		    $query			    The query (search filters applied)
 	 */
-    public static function buildSearchQuery(string $searchPhrase, array $searchColumns, MysqliQuery $query): MysqliQuery
+    public static function buildSearchQuery(string $searchPhrase, array $searchColumns, QueryInterface $query): QueryInterface
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 

@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Greenkey\Component\Geocontact\Site\Helper\AccessHelper;
+use Greenkey\Component\Geocontact\Site\Helper\DescriptionHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -33,7 +34,7 @@ class HtmlView extends BaseHtmlView
      * @var    object
      * @since  1.5
      */
-    protected object $item;
+    protected object|array|null $item = null;
 
     /**
      * The pagination object
@@ -81,63 +82,20 @@ class HtmlView extends BaseHtmlView
 
         $this->params 				= $app->getParams('com_geocontact');
 
-        /*
-        $morph = json_decode(file_get_contents('http://morphos.tech/api/inflect-geographical-name?name='.$this->item->caption.'&_format=json'), true);
-        //print_r($morph);
-        $this->caption_morph1 = $morph['cases'][1];
-        $this->caption_morph2 = $morph['cases'][2];
-        $this->caption_morph5 = $morph['cases'][5];
-
-        // Preparing description
-        switch ($this->item->category_title) {
-            case "Калужская область": $this->item->category_title = "Калужской области";
-                break;
-            case "Московская область": $this->item->category_title = "Московской области";
-                break;
-            case "Прочие регионы": $this->item->category_title = "Калужской, Московской, Тульской области";
-                break;
-        }
-        $this->item->description = str_replace("{caption}", $this->item->caption, $this->item->description);
-        $this->item->description = str_replace("{caption1}", $this->caption_morph1, $this->item->description);
-        $this->item->description = str_replace("{caption2}", $this->caption_morph2, $this->item->description);
-        $this->item->description = str_replace("{caption5}", $this->caption_morph5, $this->item->description);
-        $this->item->description = str_replace("{phones}", $this->item->phones, $this->item->description);
-        $this->item->description = str_replace("{stand}", $this->item->stand, $this->item->description);
-        $this->item->description = str_replace("{name}", $this->item->name, $this->item->description);
-        $this->item->description = str_replace("{address}", $this->item->address, $this->item->description);
-        $this->item->description = str_replace("{category}", $this->item->category_title, $this->item->description);
-
-        preg_match_all("/\{([^\{\}|]*)\|([^\{\}|]*)\}/", $this->item->description, $this->regs);
-        $selecting = $this->regs[0];
-        $os = array('a', 'b', 'k', 'l', 'e', 'x', 'y', 'w', 'z', 'i', 'p', 'm', 'w');
-        foreach ($selecting as $i => $s) {
-            if (in_array($this->item->category_alias[$i], $os)) {
-                $x = 1;
-            } else {
-                $x = 2;
-            };
-            $this->item->description = str_replace($s, $this->regs[$x][$i], $this->item->description);
-        }
-
-         */
-
-
         if (count($errors = $this->get('Errors'))) {
             throw new RuntimeException(implode("\n", $errors));
         }
 
+        if (empty($this->item) || empty($this->item->id)) {
+            throw new \Exception(Text::_('JGLOBAL_RESOURCE_NOT_FOUND'), 404);
+        }
+
+        $this->item = DescriptionHelper::prepare($this->item);
+
+        $townsModel = $app->bootComponent('com_geocontact')->getMVCFactory()->createModel('Geocontacts', 'Site');
+        $this->towns = $townsModel ? $townsModel->getItems() : [];
+
         $this->setupDocument();
-
-        /*
-        $xmlfile = JURI::base() . 'administrator/components/com_geocontact/towns.xml';
-        //echo $xmlfile;
-        //$this->towns = JFactory::getXML($xmlfile, true);
-        $this->towns = simplexml_load_file($xmlfile);
-        //$this->towns = $this->towns[2]->attributes();
-         */
-
-        // TODO: restore towns, или изменить подачу! в шаблон
-        $this->towns = [];
 
         parent::display($tpl);
     }
@@ -151,7 +109,7 @@ class HtmlView extends BaseHtmlView
         $app = Factory::getApplication();
         $user = $app->getIdentity();
 
-        if($this->_layout === 'edit') {
+        if ($this->_layout === 'edit') {
             $isEdit = ($app->input->getInt('id', 0) || $this->params->get('id'));
             if ($isEdit) {
                 $authorised = $user->authorise('core.edit', 'com_geocontact');

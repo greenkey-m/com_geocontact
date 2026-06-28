@@ -19,7 +19,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Layout\FileLayout;
 
 /**
  * Geocontact detail view
@@ -84,12 +83,13 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		$user		= Factory::getUser();
-		$isNew		= ($this->item->id == 0);
+		$user		= Factory::getApplication()->getIdentity();
+		$isNew		= ((int) $this->item->id === 0);
+        $app        = Factory::getApplication();
 
         if (isset($this->item->checked_out))
 		{
-		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
+		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->id);
         }
 		else
 		{
@@ -97,20 +97,12 @@ class HtmlView extends BaseHtmlView
         }
 
 		$canDo = GeocontactHelper::getActions();
+        $title = Text::_('COM_GEOCONTACT_TITLE_GEOCONTACT');
 
-		$title = Text::_('COM_GEOCONTACT_TITLE_GEOCONTACT');
-		$icon = 'fa fa-file-alt';
-
-		$layout = new FileLayout('joomla.toolbar.title');
-		$html = $layout->render([
-			'title' => $title,
-			'icon' => $icon
-		]);
-
-		$app = Factory::getApplication();
-		$app->JComponentTitle = str_replace('icon-', '', $html);
-		$title = strip_tags($title) . ' - ' . $app->get('sitename') . ' - ' . Text::_('JADMINISTRATION');
-		Factory::getDocument()->setTitle($title);
+		ToolbarHelper::title($title, 'map-marker');
+		$app->getDocument()->setTitle(
+            strip_tags($title) . ' - ' . $app->get('sitename') . ' - ' . Text::_('JADMINISTRATION')
+        );
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo['core.edit'] || ($canDo['core.create'])))

@@ -7,21 +7,23 @@
     <author>Matvey Rumynin</author>
     <authorEmail>info@greenkey.ru</authorEmail>
     <authorUrl>http://geocontact.greenkey.ru</authorUrl>
-    <version>5.0.0</version>
+    <version>6.0.0</version>
     <description>Geo + contact list</description>
     <namespace path="src">Greenkey\Component\Geocontact</namespace>
+    <minimumPhp>8.3.0</minimumPhp>
+    <minimumJoomla>6.0.0</minimumJoomla>
 
     <!-- Runs on install -->
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+            <file driver="mysql" charset="utf8mb4">sql/install.mysql.utf8.sql</file>
         </sql>
     </install>
-    
+
     <!-- Runs on uninstall -->
     <uninstall>
         <sql>
-            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+            <file driver="mysql" charset="utf8mb4">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
 
@@ -38,12 +40,12 @@
     </files>
     <languages folder="language">
         <language tag="en-GB">site/en-GB/com_geocontact.ini</language>
-		<language tag="ru-RU">site/ru-RU/com_geocontact.ini</language>
+        <language tag="ru-RU">site/ru-RU/com_geocontact.ini</language>
     </languages>
     <administration>
-        <menu img="components/com_geocontact/assets/images/main-16x16-geocontact.png">COM_GEOCONTACT</menu>
+        <menu img="class:generic">COM_GEOCONTACT</menu>
         <submenu>
-            <menu link="option=com_geocontact&amp;view=geocontacts" view="geocontacts" img="components/com_geocontact/assets/images/view-16x16-geocontacts.png" alt="Geocontact/Geocontacts">COM_GEOCONTACT_TITLE_GEOCONTACTS</menu>
+            <menu link="option=com_geocontact&amp;view=geocontacts" view="geocontacts" img="class:list" alt="Geocontact/Geocontacts">COM_GEOCONTACT_TITLE_GEOCONTACTS</menu>
             <menu link="option=com_categories&amp;extension=com_geocontact">JCATEGORIES</menu>
         </submenu>
         <files folder="administrator">
@@ -55,13 +57,13 @@
             <folder>services</folder>
             <folder>sql</folder>
             <folder>src</folder>
+            <folder>vendor</folder>
         </files>
         <languages folder="language">
             <language tag="en-GB">administrator/en-GB/com_geocontact.ini</language>
-			<language tag="en-GB">administrator/en-GB/com_geocontact.sys.ini</language>
-			<language tag="ru-RU">administrator/ru-RU/com_geocontact.ini</language>
-			<language tag="ru-RU">administrator/ru-RU/com_geocontact.sys.ini</language>
+            <language tag="en-GB">administrator/en-GB/com_geocontact.sys.ini</language>
+            <language tag="ru-RU">administrator/ru-RU/com_geocontact.ini</language>
+            <language tag="ru-RU">administrator/ru-RU/com_geocontact.sys.ini</language>
         </languages>
     </administration>
-    <!-- Generated with the ComponentGenerator.com -->
 </extension>

@@ -11,15 +11,17 @@ namespace Greenkey\Component\Geocontact\Site\Service;
 
 defined('_JEXEC') or die;
 
+use Greenkey\Component\Geocontact\Site\Service\Rules\AliasBuildRules;
+use Greenkey\Component\Geocontact\Site\Service\Rules\AliasParseRules;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
+use Joomla\CMS\Component\Router\Rules\PreprocessRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Menu\AbstractMenu;
-use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
@@ -32,111 +34,107 @@ class Router extends RouterView
 {
     private CategoryFactoryInterface $categoryFactory;
 
+    private DatabaseInterface $db;
+
     /**
      * @param SiteApplication $app The application object
      * @param AbstractMenu $menu The menu object to work with
      */
-    public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory)
-    {
+    public function __construct(
+        SiteApplication $app,
+        AbstractMenu $menu,
+        CategoryFactoryInterface $categoryFactory,
+        DatabaseInterface $db
+    ) {
         $this->categoryFactory = $categoryFactory;
+        $this->db              = $db;
 
         $this->registerView(new RouterViewConfiguration('geocontacts'));
-        $this->registerView(new RouterViewConfiguration('geocontact'));
+
+        $geocontact = new RouterViewConfiguration('geocontact');
+        $geocontact->setKey('id');
+        $this->registerView($geocontact);
 
         parent::__construct($app, $menu);
 
+        $preprocess = new PreprocessRules($geocontact, '#__geocontact_geocontacts', 'id', 'catid');
+        $preprocess->setDatabase($this->db);
+        $this->attachRule($preprocess);
+        $this->attachRule(new AliasBuildRules($this, $this->db));
         $this->attachRule(new MenuRules($this));
         $this->attachRule(new StandardRules($this));
         $this->attachRule(new NomenuRules($this));
+        $this->attachRule(new AliasParseRules($this->db));
     }
 
     /**
-     * Build the route for the com_geocontact component
-     *
-     * @param array  &$query An array of URL arguments
-     *
-     * @return  array  The URL arguments to use to assemble the subsequent URL
-     *
-     * @since   3.3
+     * @return CategoryFactoryInterface
      */
-    public function build(&$query)
+    public function getCategoriesFactory(): CategoryFactoryInterface
     {
-        $segments = array();
-
-        if (isset($query['id'], $query['catid'])) {
-            // Get DB
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            // Get item info
-            $itemId = (int)$query['id'];
-            $item = $db->setQuery('SELECT alias, catid FROM #__geocontact_geocontacts WHERE id = ' . $itemId)->loadObject();
-
-            //$sample = $this->categories->get($item->category_id);
-
-            if ($item) {
-                // Get category alias using CategoryFactory
-                $options = ['access' => false];
-                $categories = $this->categoryFactory->createCategory($options);
-                $category = $categories->get($item->catid);
-                $catAlias = $category->alias ?? '';
-                // Add category alias and item alias
-                $segments[] = $catAlias;
-                $segments[] = $item->alias;
-            }
-            unset($query['id'], $query['catid']);
-        }
-
-        if (isset($query['view'])) {
-            unset($query['view']);
-        }
-        unset($query['Itemid']);
-        return $segments;
+        return $this->categoryFactory;
     }
 
     /**
-     * Parse the segments of a URL.
+     * Method to get categories
      *
-     * @param array  &$segments The segments of the URL to parse.
+     * @param   array  $options  An array of options
      *
-     * @return  array  The URL attributes to be used by the application.
-     *
-     * @since   3.3
+     * @return  \Joomla\CMS\Categories\Categories
      */
-    public function parse(&$segments)
+    public function getCategories(array $options = []): \Joomla\CMS\Categories\Categories
     {
-        $vars = array();
+        return $this->categoryFactory->createCategory($options);
+    }
 
-        // View is always the first element of the array
-        $count = count($segments);
+    /**
+     * Method to get the segment(s) for a geocontact item
+     *
+     * @param   string  $id     ID of the item
+     * @param   array   $query  The request that is built right now
+     *
+     * @return  array
+     */
+    public function getGeocontactSegment($id, $query): array
+    {
+        $itemId = (int) $id;
+        $query  = $this->db->getQuery(true);
+        $query->select($this->db->quoteName('alias'))
+            ->from($this->db->quoteName('#__geocontact_geocontacts'))
+            ->where($this->db->quoteName('id') . ' = :id')
+            ->bind(':id', $itemId, ParameterType::INTEGER);
+        $alias = $this->db->setQuery($query)->loadResult();
 
-        if ($count) {
-            $segment = array_shift($segments);
-
-            if (is_numeric($segment)) {
-                $vars['id'] = $segment;
-            } else {
-                $vars['view'] = "geocontact";
-            }
-
-            $segment = array_shift($segments);
-
-            if (is_numeric($segment)) {
-                $vars['id'] = $segment;
-            } else {
-                $db = Factory::getContainer()->get(DatabaseInterface::class);
-                // Get item info
-                $alias = (string)$segment;
-
-                $dbquery = $db->getQuery(true);
-                $dbquery->select('id, catid')
-                    ->from('#__geocontact_geocontacts')
-                    ->where($dbquery->quoteName('alias') . ' = :a')
-                    ->bind(':a', $alias, ParameterType::STRING);
-                $item = $db->setQuery($dbquery)->loadObject();
-                $vars['id'] = $item->id;
-                $vars['catid'] = $item->catid;
-            }
+        if ($alias) {
+            return [$itemId => $alias];
         }
 
-        return $vars;
+        return [$itemId => $itemId];
+    }
+
+    /**
+     * Method to get the id for a geocontact segment
+     *
+     * @param   string  $segment  Segment to retrieve the ID for
+     * @param   array   $query    The request that is parsed right now
+     *
+     * @return  int|false
+     */
+    public function getGeocontactId($segment, $query)
+    {
+        if (is_numeric($segment)) {
+            return (int) $segment;
+        }
+
+        $alias = (string) $segment;
+        $dbQuery = $this->db->getQuery(true);
+        $dbQuery->select($this->db->quoteName('id'))
+            ->from($this->db->quoteName('#__geocontact_geocontacts'))
+            ->where($this->db->quoteName('alias') . ' = :alias')
+            ->where($this->db->quoteName('state') . ' = 1')
+            ->bind(':alias', $alias, ParameterType::STRING);
+        $id = $this->db->setQuery($dbQuery)->loadResult();
+
+        return $id ? (int) $id : false;
     }
 }

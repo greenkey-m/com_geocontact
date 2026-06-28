@@ -15,10 +15,11 @@ use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 use Greenkey\Component\Geocontact\Administrator\Helper\FormHelper;
 use Greenkey\Component\Geocontact\Administrator\Helper\GeocontactHelper;
 use Joomla\CMS\Form\Form;
-use JUri;
+use RuntimeException;
 
 /**
  * Geocontact model
@@ -103,7 +104,8 @@ class GeocontactsModel extends ListModel
      */
     protected function getListQuery()
     {
-        $query = $this->_db->getQuery(true);
+        $db = $this->getDatabase();
+        $query = $db->getQuery(true);
 
         $query->select('a.id, a.description, a.stand');
         $query->select('a.address, a.name, a.phones');
@@ -111,11 +113,11 @@ class GeocontactsModel extends ListModel
         $query->select('a.ordering');
         $query->select('c.title AS `category_title` ');
 
-        $query->from($this->_db->quoteName('#__geocontact_geocontacts', 'a'));
+        $query->from($db->quoteName('#__geocontact_geocontacts', 'a'));
 
         $query->select('i.name AS `created_by`');
-        $query->join('LEFT', $this->_db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
-        $query->leftJoin($this->_db->qn('#__users') . ' AS `i` ON i.id = a.created_by');
+        $query->join('LEFT', $db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
+        $query->leftJoin($db->quoteName('#__users', 'i') . ' ON i.id = a.created_by');
 
         // Filter by published state
         $state = $this->getState('filter.published');
@@ -145,21 +147,21 @@ class GeocontactsModel extends ListModel
             if (stripos($searchPhrase, 'id:') === 0) {
                 // Build the ID search
                 $idPart = (int)substr($searchPhrase, 3);
-                $query->where($this->_db->qn('a.id') . ' = ' . $this->_db->q($idPart));
+                $query->where($db->quoteName('a.id') . ' = ' . $db->quote($idPart));
             } else {
                 // Build the search query from the search word and search columns
                 $query = GeocontactHelper::buildSearchQuery($searchPhrase, $searchColumns, $query);
             }
         }
 
-        $query->group($this->_db->qn('a.id'));
+        $query->group($db->quoteName('a.id'));
 
         // Add the list ordering clause
         $orderCol = $this->state->get('list.ordering');
         $orderDirn = $this->state->get('list.direction');
 
         if ($orderCol && $orderDirn) {
-            $query->order($this->_db->escape($orderCol . ' ' . $orderDirn));
+            $query->order($db->escape($orderCol . ' ' . $orderDirn));
         }
 
         return $query;
@@ -221,60 +223,69 @@ class GeocontactsModel extends ListModel
         return $s; // возвращаем результат return iconv("UTF-8","UTF-8//IGNORE", $s);
     }
 
-    public function loadItems()
+    public function loadItems(): int
     {
-        $xmlfile = JURI::base() . 'components/com_geocontact/towns.xml';
-        //$this->towns = JFactory::getXML($xmlfile, true);
-        $towns = simplexml_load_string(file_get_contents($xmlfile));
-        //$this->towns = $this->towns[2]->attributes();
-        //print_r($towns);
+        $xmlPath = JPATH_ADMINISTRATOR . '/components/com_geocontact/towns.xml';
 
-        $categories = Categories::getInstance('geocontact');
-        $rootNode = $categories->get();
-        $categoryNodes = $rootNode->getChildren();
-        $regions = [];
-        foreach ($categoryNodes as $node) {
-            $regions[$node->title] = $node->id;
+        if (!is_file($xmlPath)) {
+            throw new RuntimeException(Text::_('COM_GEOCONTACT_ERROR_TOWNS_XML_NOT_FOUND'));
         }
 
+        $towns = simplexml_load_file($xmlPath);
+
+        if ($towns === false) {
+            throw new RuntimeException(Text::_('COM_GEOCONTACT_ERROR_TOWNS_XML_INVALID'));
+        }
+
+        $categories   = Categories::getInstance('com_geocontact', ['countItems' => false]);
+        $rootNode     = $categories->get();
+        $categoryNodes = $rootNode ? $rootNode->getChildren() : [];
+        $regions      = [];
+
+        foreach ($categoryNodes as $node) {
+            $regions[(string) $node->title] = (int) $node->id;
+        }
+
+        $user  = Factory::getApplication()->getIdentity();
+        $count = 0;
 
         foreach ($towns as $town) {
-            echo "<p>" . $town->caption . "</p>\n";
-            // Получаем экземпляр класса TableGeocontact.
-            // Possible to use this JFilterOutput::stringURLSafe($string)
-            if ($town->alias == "") {
-                $town->alias = $this->rus2lat($town->caption);
-            }
             $table = $this->getTable('Geocontact');
-            $table->caption = (string)$town->caption;
-            $table->alias = (string)$town->alias;
-            $table->latlong = (string)$town->latlong;
+            $alias = trim((string) $town->alias);
 
-            // Добавляем категорию по названию, если такие есть
-            if (array_key_exists((string)$town['region'], $regions)) {
-                $table->catid = $regions[(string)$town['region']];
+            if ($alias === '') {
+                $alias = $this->rus2lat((string) $town->caption);
             }
 
-            $table->phones = (string)$town->phones;
-            $table->name = (string)$town->name;
-            $table->address = (string)$town->address;
-            $table->stand = (string)$town->stand;
-            $table->description = (string)$town->description;
+            $table->caption     = (string) $town->caption;
+            $table->alias       = $alias;
+            $table->latlong     = (string) $town->latlong;
+            $table->phones      = (string) $town->phones;
+            $table->name        = (string) $town->name;
+            $table->address     = (string) $town->address;
+            $table->stand       = (string) $town->stand;
+            $table->description = (string) $town->description;
+            $table->state       = 1;
+            $table->created_by  = (int) $user->id;
 
-            $user = Factory::getApplication()->getIdentity();
-            $table->created_by = $user->id;
+            $region = (string) $town['region'];
 
-            $table->store();
-            //$table->publish();
+            if ($region !== '' && isset($regions[$region])) {
+                $table->catid = $regions[$region];
+            }
+
+            if (!$table->store()) {
+                continue;
+            }
+
+            $count++;
         }
 
-        //$db = JFactory::getDbo();
-        //$db->setQuery('SELECT MAX(ordering) FROM #__geocontact_geocontacts');
+        return $count;
     }
 
-    public function saveItems()
+    public function saveItems(): bool
     {
-        echo "save!!!";
+        return false;
     }
-
 }

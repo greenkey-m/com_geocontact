@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Joomla\Component\Geocontact\Site\Helper\DatetimeHelper;
 
 //$document = Factory::getDocument();
 //$document->setTitle("Сеть продаж: теплицы из поликарбоната в " . $this->caption_morph5 );

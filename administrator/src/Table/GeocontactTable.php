@@ -48,7 +48,9 @@ class GeocontactTable extends Table
 		$input = Factory::getApplication()->input;
 		$task = $input->getString('task', '');
 
-        if(($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state','com_geocontact') && !isset($data['id']))) {
+        if (($task === 'save' || $task === 'apply')
+            && !Factory::getApplication()->getIdentity()->authorise('core.edit.state', 'com_geocontact')
+            && empty($data['id'])) {
             $data['state'] = 0;
         }
 
@@ -66,8 +68,8 @@ class GeocontactTable extends Table
             $data['metadata'] = (string) $registry;
         }
 
-        if(!Factory::getUser()->authorise('core.admin', 'com_geocontact.geocontact.'.$data['id']))
-        {
+        if (!empty($data['id'])
+            && !Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_geocontact.geocontact.' . $data['id'])) {
             $actions = ContentHelper::getActions('com_geocontact','geocontact');
             $defaultActions = Access::getAssetRules('com_geocontact.geocontact.'.$data['id'])->getData();
             $jaccessRules = [];
@@ -78,23 +80,10 @@ class GeocontactTable extends Table
             $data['rules'] = $this->jaccessRulesToArray($jaccessRules);
         }
 
-        //Bind the rules for ACL where supported.
-		if (isset($data['rules']) && is_array($data['rules']))
-        {
+		if (isset($data['rules']) && is_array($data['rules'])) {
 			$this->setRules($data['rules']);
 		}
 
-		$dateTimeNow = new \DateTime('NOW');
-
-		if ($data['id'])
-		{
-			$data['updated_datetime'] = $dateTimeNow->format('Y-m-d H:i:s');
-		}
-		else
-		{
-			$data['created_datetime'] = $dateTimeNow->format('Y-m-d H:i:s');
-		}
-		
         return parent::bind($data, $ignore);
     }
 
@@ -145,27 +134,9 @@ class GeocontactTable extends Table
 	 * @return bool
      * @throws \Exception
 	 */
-    function store($updateNulls = false)
+    public function store($updateNulls = false)
     {
-    	$k = $this->_tbl_key;
-
-    	if ($this->$k)
-    	{
-    		$ret = $this->updateObject($updateNulls);
-    	}
-    	else
-    	{
-    		$ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
-    	}
-    
-    	if (!$ret)
-    	{
-    		$this->setError(get_class( $this ).'::store failed - ' . $this->_db->getErrorMsg());
-
-    		return false;
-    	}
-
-    	return true;
+        return parent::store($updateNulls);
     }
     
     /**
@@ -277,7 +248,7 @@ class GeocontactTable extends Table
 	 *
 	 * @return int
 	 */
-    protected function _getAssetParentId(Table $table = NULL, $id = NULL) : int
+    protected function _getAssetParentId(?Table $table = null, $id = null): int
     {
         // We will retrieve the parent-asset from the Asset-table
         $assetParent = Table::getInstance('Asset');
@@ -291,88 +262,5 @@ class GeocontactTable extends Table
             $assetParentId=$assetParent->id;
         }
         return $assetParentId;
-    }
-
-    /**
-     * Updates a row in a table based on an object's properties.
-     *
-     * @param boolean $updateNulls True to update null fields or false to ignore them.
-     *
-     * @return  boolean
-     *
-     * @throws \Exception
-     * @since   1.7.0
-     */
-    public function updateObject(bool $updateNulls = false): bool
-    {
-        $fields = [];
-        $where = [];
-
-        $key = '';
-        if (is_string($this->_tbl_key)) {
-            $key = array($this->_tbl_key);
-        }
-
-        if (is_object($this->_tbl_key)) {
-            $key = (array)$this->_tbl_key;
-        }
-
-        $statement = 'UPDATE ' . $this->_db->qn($this->_tbl) . ' SET %s WHERE %s';
-
-        foreach (get_object_vars($this) as $k => $v) {
-            if (is_array($v) || is_object($v) || $k[0] === '_') {
-                continue;
-            }
-            if (in_array($k, $key)) {
-                $where[] = $this->_db->qn($k) . ($v === null ? ' IS NULL' : ' = ' . $this->_db->q($v));
-                continue;
-            }
-
-            if ($v === null) {
-                if ($updateNulls) {
-                    $val = 'NULL';
-                } else {
-                    continue;
-                }
-            } else {
-                $val = $this->_db->q($v);
-            }
-
-            $fields[$k] = $this->_db->qn($k) . '=' . $val;
-        }
-
-        if (empty($fields)) {
-            return true;
-        }
-
-        $fields = $this->setNullValues($fields);
-        
-        $this->_db->setQuery(sprintf($statement, implode(',', array_values($fields)), implode(' AND ', $where)));
-
-        return $this->_db->execute();
-    }
-
-    /**
-     * @param array $fields
-     * @return array
-     * @throws \Exception
-     */
-    private function setNullValues(array $fields): array
-    {
-        $app = Factory::getApplication();
-        if ($app === null) {
-            return $fields;
-        }
-        $data = $app->input->get('jform', null, null);
-        $id = !empty($data['id']) ? $data['id'] : $app->input->get('id');
-        if (!$id) {
-            return $fields;
-        }
-        foreach ($this->getFields() as $field) {
-            if ($field->Null === 'YES' && $data[$field->Field] === '' && in_array($field->Type, ['date', 'datetime'])) {
-                $fields[$field->Field] = $this->_db->qn($field->Field) . ' = NULL';
-            }
-        }
-        return $fields;
     }
 }

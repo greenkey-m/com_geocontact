@@ -80,7 +80,7 @@ class HtmlView extends BaseHtmlView
         $user = $app->getIdentity();
 
         $this->params = $app->getParams('com_geocontact');
-        $this->item_id = $app->input->getInt('Itemid');
+        $this->item_id = $app->input->getInt('Itemid', 0);
         
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
@@ -97,8 +97,7 @@ class HtmlView extends BaseHtmlView
 
         $this->setupDocument();
 
-        // TODO: restore towns, или изменить подачу! в шаблон
-        $this->towns = [];
+        $this->towns = $this->items;
 
         parent::display($tpl);
 	}
