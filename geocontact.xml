@@ -7,7 +7,7 @@
     <author>Matvey Rumynin</author>
     <authorEmail>info@greenkey.ru</authorEmail>
     <authorUrl>http://geocontact.greenkey.ru</authorUrl>
-    <version>6.0.0</version>
+    <version>6.1.0</version>
     <description>Geo + contact list</description>
     <namespace path="src">Greenkey\Component\Geocontact</namespace>
     <minimumPhp>8.3.0</minimumPhp>
