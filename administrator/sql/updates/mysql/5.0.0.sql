@@ -1,1 +1,1 @@
-ALTER TABLE `#__geocontact_geocontacts` MODIFY COLUMN `ordering` int DEFAULT 0 NOT NULL;
+ALTER TABLE `#__geocontact_geocontacts` MODIFY `ordering` int(11) NOT NULL DEFAULT 0;
