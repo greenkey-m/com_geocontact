@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "578bebe10e08fea27279afa6ecdafc50",
+    "content-hash": "ce42286eec4dc3629a475e80064bc14c",
     "packages": [
         {
             "name": "wapmorgan/morphos",
-            "version": "dev-master",
+            "version": "3.2.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wapmorgan/Morphos.git",
-                "reference": "0b2caf6fdf79dec4d5cce5eb12e6c7a386d3a390"
+                "reference": "b7680f96101668ec910627239048e34aae64d6f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wapmorgan/Morphos/zipball/0b2caf6fdf79dec4d5cce5eb12e6c7a386d3a390",
-                "reference": "0b2caf6fdf79dec4d5cce5eb12e6c7a386d3a390",
+                "url": "https://api.github.com/repos/wapmorgan/Morphos/zipball/b7680f96101668ec910627239048e34aae64d6f8",
+                "reference": "b7680f96101668ec910627239048e34aae64d6f8",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,8 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8"
+                "php": ">=7.3",
+                "phpunit/phpunit": "~9.5.20"
             },
             "suggest": {
                 "ext-readline": "For using interactive version of script"
@@ -34,8 +35,7 @@
             "autoload": {
                 "files": [
                     "src/English/functions.php",
-                    "src/Russian/functions.php",
-                    "src/initialization.php"
+                    "src/Russian/functions.php"
                 ],
                 "psr-4": {
                     "morphos\\": "src/"
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "A morphological solution for Russian and English language written completely in PHP. Provides classes to inflect personal names, geographical names, decline and pluralize nouns, generate cardinal and ordinal numerals, spell out money amounts and time.",
-            "homepage": "http://morphos.tech",
+            "homepage": "http://morphos.io",
             "keywords": [
                 "Numerals",
                 "adjectives",
@@ -74,17 +74,22 @@
                 "spelling",
                 "time"
             ],
-            "time": "2018-03-09T18:53:36+00:00"
+            "support": {
+                "issues": "https://github.com/wapmorgan/Morphos/issues",
+                "source": "https://github.com/wapmorgan/Morphos/tree/3.2.30"
+            },
+            "time": "2025-06-27T23:05:16+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wapmorgan/morphos": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {
+        "ext-simplexml": "*"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

@@ -8,6 +8,10 @@
         }
     ],
     "require": {
-        "wapmorgan/morphos": "dev-master"
+        "wapmorgan/morphos": "^3.2",
+        "ext-simplexml": "*"
+    },
+    "config": {
+        "vendor-dir": "administrator/vendor"
     }
 }
